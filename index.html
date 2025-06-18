@@ -32,7 +32,7 @@
       content: "";
       position: fixed;
       top:0; left:0; right:0; bottom:0;
-      background-color: rgba(0,0,0,0.75);
+      background-color: rgba(0,0,0,0.45); /* Mais leve */
       z-index: 0;
     }
 
@@ -65,18 +65,24 @@
       font-size: 1.1rem;
       font-weight: bold;
       color: #fff;
-      background: linear-gradient(135deg, #00c9ff, #92fe9d);
-      border: none;
+      background: rgba(0, 201, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 50px;
       cursor: pointer;
       text-decoration: none;
-      box-shadow: 0 8px 22px rgba(0, 201, 255, 0.3);
+      box-shadow: 0 0 10px rgba(0,201,255,0.2);
+      backdrop-filter: blur(8px);
       transition: all 0.3s ease;
     }
 
     .btn:hover {
       transform: scale(1.08);
-      box-shadow: 0 12px 30px rgba(0, 201, 255, 0.5);
+      box-shadow: 0 0 20px rgba(0,201,255,0.5);
+    }
+
+    .btn:active {
+      box-shadow: 0 0 25px rgba(0,255,255,0.8);
+      transform: scale(1.03);
     }
 
     .btn svg {
@@ -130,12 +136,10 @@
   </video>
 
     <a href="https://www.instagram.com/__pedrosantosvl" target="_blank" class="btn">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224,202.66A53.34,53.34,0,1,0,277.34,256,53.38,53.38,0,0,0,224,202.66Zm124.71-41a54,54,0,0,0-30.36-30.36C296.59,124,224,124,224,124s-72.59,0-94.35,7.34a54,54,0,0,0-30.36,30.36C92,146.41,92,192,92,192s0,45.59,7.34,67.35a54,54,0,0,0,30.36,30.36C151.41,296,224,296,224,296s72.59,0,94.35-7.34a54,54,0,0,0,30.36-30.36C356,237.59,356,192,356,192S356,146.41,348.71,161.66ZM224,272a80,80,0,1,1,80-80A80,80,0,0,1,224,272Zm88-144a16,16,0,1,1,16-16A16,16,0,0,1,312,128Z"/></svg>
       Instagram
     </a>
 
     <a href="https://wa.me/555192610121" target="_blank" class="btn">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M380.9 97.1C339-13.5 214.2-35.3 123.6 15.4 47.3 57.5 4.4 134.8 16.6 217.4c5.2 35.2 20.1 67.5 42.6 93.6L16 496l191.7-41.3c25.5 7.1 52.6 10.8 80.1 10.8 130.1 0 235.8-105.7 235.8-235.8 0-62.8-24.8-121.7-65.7-165.6z"/></svg>
       WhatsApp
     </a>
 
