@@ -35,20 +35,27 @@
       background-color: rgba(0, 0, 0, 0.45);
       z-index: 0;
     }
+   
+   .btn-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 
-    .container {
-      position: relative;
-      z-index: 1;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 1.5rem;
-      text-align: center;
-      padding: 1rem;
-    }
-
+.container {
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  padding: 1rem;
+}
     h1 {
       font-size: 3.5rem;
       font-weight: bold;
@@ -75,15 +82,16 @@
       transition: all 0.3s ease;
     }
 
-    .btn:hover {
-      transform: scale(1.08);
-      box-shadow: 0 0 20px rgba(0, 201, 255, 0.5);
-    }
+.btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 25px rgba(0, 201, 255, 0.8), 0 0 10px rgba(0, 201, 255, 0.5);
+  transition: all 0.25s ease-in-out;
+}
 
-    .btn:active {
-      box-shadow: 0 0 25px rgba(0, 255, 255, 0.8);
-      transform: scale(1.03);
-    }
+  .btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 0 18px rgba(0, 255, 255, 0.8) inset;
+}
 
     .btn svg {
       width: 22px;
@@ -91,55 +99,67 @@
       fill: white;
     }
 
-    .rainken-btn {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: linear-gradient(135deg, #ff0080, #7928ca);
-      color: white;
-      padding: 0.8rem 1.6rem;
-      font-size: 0.95rem;
-      font-weight: bold;
-      border-radius: 999px;
-      text-decoration: none;
-      box-shadow: 0 0 20px rgba(255, 0, 128, 0.5);
-      animation: pulse 2s infinite;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      z-index: 999;
-    }
+.rainken-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #f7c600, #ff9500);
+  color: #000;
+  padding: 0.4rem 1rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: 0 0 15px rgba(255, 200, 0, 0.4);
+  animation: pulse-yellow 2s infinite;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  z-index: 999;
+}
 
-    .rainken-btn .tag {
-      font-size: 0.7rem;
-      background: rgba(255, 255, 255, 0.2);
-      padding: 3px 8px;
-      border-radius: 999px;
-      font-style: italic;
-    }
+.rainken-btn .tag {
+  font-size: 0.6rem;
+  background: rgba(0, 0, 0, 0.1);
+  padding: 2px 6px;
+  border-radius: 999px;
+  font-style: italic;
+  color: #000;
+}
 
-    @keyframes pulse {
-      0% { transform: translateX(-50%) scale(1); box-shadow: 0 0 20px rgba(255, 0, 128, 0.5); }
-      50% { transform: translateX(-50%) scale(1.05); box-shadow: 0 0 30px rgba(255, 0, 128, 0.8); }
-      100% { transform: translateX(-50%) scale(1); box-shadow: 0 0 20px rgba(255, 0, 128, 0.5); }
-    }
+@keyframes pulse-yellow {
+  0% {
+    transform: translateX(-50%) scale(1);
+    box-shadow: 0 0 15px rgba(255, 200, 0, 0.4);
+  }
+  50% {
+    transform: translateX(-50%) scale(1.05);
+    box-shadow: 0 0 25px rgba(255, 200, 0, 0.7);
+  }
+  100% {
+    transform: translateX(-50%) scale(1);
+    box-shadow: 0 0 15px rgba(255, 200, 0, 0.4);
+  }
+}
   </style>
 </head>
 <body>
-  <video autoplay muted loop id="bg-video">
-    <source src="obito.mp4" type="video/mp4">
-    Seu navegador não suporta vídeo HTML5.
-  </video>
+<video autoplay muted loop id="bg-video">
+  <source src="https://files.catbox.moe/im8lrm.mp4" type="video/mp4">
+</video>
 
+<div class="container">
+  <div class="btn-group">
     <a href="https://www.instagram.com/__pedrosantosvl" target="_blank" class="btn">Instagram</a>
     <a href="https://wa.me/555192610121" target="_blank" class="btn">WhatsApp</a>
     <a href="https://chat.whatsapp.com/JdtbtGsCZ6pGdOVVF6i8xS" target="_blank" class="btn">Grupo WhatsApp</a>
     <a href="cases.js" download class="btn">Baixar Cases.js</a>
     <a href="https://www.youtube.com/@PdrModz" target="_blank" class="btn">Meu Canal no YouTube</a>
   </div>
+</div>
 
-  <!-- Botão Rainken API fixo no rodapé -->
+ 
   <a href="https://raikken-api.speedhosting.cloud/" target="_blank" class="rainken-btn">
     🔗 Rainken API <span class="tag">recomendada</span>
   </a>
