@@ -15,11 +15,10 @@
       height: 100%;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: white;
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: auto;
     }
-    
 
-    /* Vídeo de fundo */
     #bg-video {
       position: fixed;
       right: 0;
@@ -33,26 +32,29 @@
     body::before {
       content: "";
       position: fixed;
-      top:0; left:0; right:0; bottom:0;
-      background-color: rgba(0,0,0,0.65);
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.65);
       z-index: 0;
     }
 
     .container {
       position: relative;
       z-index: 1;
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       gap: 1.5rem;
       text-align: center;
-      padding: 0 1rem;
+      padding: 1rem;
     }
 
     h1 {
-      font-size: 4rem;
+      font-size: 3rem;
       font-weight: bold;
       text-shadow: 3px 3px 12px rgba(0,0,0,0.8);
       margin-bottom: 1.5rem;
@@ -63,8 +65,8 @@
       align-items: center;
       justify-content: center;
       gap: 12px;
-      padding: 1rem 2.8rem;
-      font-size: 1.2rem;
+      padding: 0.8rem 2rem;
+      font-size: 1rem;
       font-weight: bold;
       color: #fff;
       background: linear-gradient(135deg, #6a11cb, #2575fc);
@@ -87,45 +89,68 @@
       fill: white;
       flex-shrink: 0;
     }
+
     .rainken-btn {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  background: linear-gradient(135deg, #ff0080, #7928ca);
-  color: white;
-  padding: 1rem 2rem;
-  font-size: 1.1rem;
-  font-weight: bold;
-  border-radius: 40px;
-  text-decoration: none;
-  z-index: 999;
-  box-shadow: 0 0 20px rgba(255, 0, 128, 0.5);
-  animation: pulse 2s infinite;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: linear-gradient(135deg, #ff0080, #7928ca);
+      color: white;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 40px;
+      text-decoration: none;
+      z-index: 999;
+      box-shadow: 0 0 20px rgba(255, 0, 128, 0.5);
+      animation: pulse 2s infinite;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-.rainken-btn .tag {
-  font-size: 0.75rem;
-  background: rgba(255,255,255,0.2);
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-style: italic;
-}
+    .rainken-btn .tag {
+      font-size: 0.75rem;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-style: italic;
+    }
 
-@keyframes pulse {
-  0% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 0, 128, 0.5); }
-  50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 0, 128, 0.8); }
-  100% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 0, 128, 0.5); }
-}
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 0, 128, 0.5); }
+      50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 0, 128, 0.8); }
+      100% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 0, 128, 0.5); }
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+      .btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.95rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+      .btn {
+        padding: 0.5rem 1.2rem;
+        font-size: 0.9rem;
+        flex-direction: column;
+        gap: 6px;
+      }
+    }
   </style>
 </head>
 <body>
   <a href="https://raikken-api.speedhosting.cloud/" target="_blank" class="rainken-btn">
-  🔗 Rainken API <span class="tag">ʳᵉᶜᵒᵐᵉⁿᵈᵃᵈᵃ</span>
+    🔗 Rainken API <span class="tag">ʳᵉᶜᵒᵐᵉⁿᵈᵃᵈᵃ</span>
   </a>
-  <!-- 🎥 Vídeo de fundo -->
+
   <video autoplay muted loop id="bg-video">
     <source src="obito.mp4" type="video/mp4">
     Seu navegador não suporta vídeo em HTML5.
@@ -135,38 +160,33 @@
     <h1>PdrModz</h1>
 
     <a href="https://www.instagram.com/__pedrosantosvl" target="_blank" class="btn">
-      <!-- Instagram SVG -->
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224,202.66A53.34,53.34,0,1,0,277.34,256,53.38,53.38,0,0,0,224,202.66Zm124.71-41a54,54,0,0,0-30.36-30.36C296.59,124,224,124,224,124s-72.59,0-94.35,7.34a54,54,0,0,0-30.36,30.36C92,146.41,92,192,92,192s0,45.59,7.34,67.35a54,54,0,0,0,30.36,30.36C151.41,296,224,296,224,296s72.59,0,94.35-7.34a54,54,0,0,0,30.36-30.36C356,237.59,356,192,356,192S356,146.41,348.71,161.66ZM224,272a80,80,0,1,1,80-80A80,80,0,0,1,224,272Zm88-144a16,16,0,1,1,16-16A16,16,0,0,1,312,128Z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="..."/></svg>
       Instagram
     </a>
 
     <a href="https://wa.me/555192610121" target="_blank" class="btn">
-      <!-- WhatsApp SVG -->
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M380.9 97.1C339-13.5 214.2-35.3 123.6 15.4 47.3 57.5 4.4 134.8 16.6 217.4c5.2 35.2 20.1 67.5 42.6 93.6L16 496l191.7-41.3c25.5 7.1 52.6 10.8 80.1 10.8 130.1 0 235.8-105.7 235.8-235.8 0-62.8-24.8-121.7-65.7-165.6zM240 400c-22.9 0-45.1-4.2-65.9-12.6L82 424l13.6-88.7c-20.4-26.1-31.5-58.5-31.5-91.9 0-97.2 79.1-176.3 176.3-176.3S416 146.1 416 243.3 337 400 240 400zm82.1-111.4c-4.5-2.3-26.5-13.1-30.6-14.6-4.1-1.5-7.1-2.3-10.2 2.3s-11.7 14.6-14.4 17.6c-2.6 3-5.3 3.4-9.8 1.1-26.6-13.3-44-23.7-61.5-53.6-4.6-7.9 4.6-7.3 13.3-24.3 1.5-3 0.7-5.6-0.4-7.9-1.1-2.3-10.2-24.6-14-33.7-3.7-8.9-7.5-7.6-10.2-7.7-2.6-0.1-5.6-0.1-8.5-0.1s-7.9 1.1-12 5.6c-4.1 4.5-15.6 15.2-15.6 37s16 43 18.2 46c2.3 3 31.5 48 76.4 67.2 10.7 4.6 19 7.3 25.5 9.3 10.7 3.4 20.4 2.9 28-1.8 8.6-5.1 26.5-24.3 30.3-33.7 3.8-9.4 3.8-17.4 2.6-19.2-1.1-1.9-4.1-3-8.6-5.2z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="..."/></svg>
       WhatsApp
     </a>
 
     <a href="https://chat.whatsapp.com/JdtbtGsCZ6pGdOVVF6i8xS" target="_blank" class="btn">
-      <!-- Grupo SVG -->
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M96 96v320h448V96H96zm352 144H352v96H288V240H192v-64h96V80h64v96h96v64z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="..."/></svg>
       Grupo WhatsApp
     </a>
 
     <a href="https://wa.me/555192610121" target="_blank" class="btn">
-      <!-- Download Mikasa -->
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M480 352h-96V272H128v80H32l224 128 224-128zM256 0C150 0 64 86 64 192c0 92.5 63.6 170.5 149.5 188.8V512h84V380.8C384.4 362.5 448 284.5 448 192 448 86 362 0 256 0z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="..."/></svg>
       adquirir bot
     </a>
 
     <a href="cases.js" download class="btn">
-      <!-- Download Cases.js -->
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zM256 0v128h128L256 0z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="..."/></svg>
       Download Cases.js
     </a>
+
     <a href="https://www.youtube.com/@PdrModz" target="_blank" class="btn">
-  <!-- YouTube SVG -->
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M549.7 124.1c-6.3-23.8-25-42.5-48.9-48.8C456.2 64 288 64 288 64S119.8 64 75.3 75.3c-23.8 6.3-42.5 25-48.8 48.9C16 168.6 16 256 16 256s0 87.4 10.5 131.9c6.3 23.8 25 42.5 48.9 48.8C119.8 448 288 448 288 448s168.2 0 212.7-11.3c23.8-6.3 42.5-25 48.8-48.9C560 343.4 560 256 560 256s0-87.4-10.3-131.9zM232 334.7V177.3L361.6 256 232 334.7z"/></svg>
-  Meu canal 
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="..."/></svg>
+      Meu canal
     </a>
   </div>
 </body>
