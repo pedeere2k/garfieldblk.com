@@ -1,193 +1,155 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PdrModz - Portal</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PdrModz - Portal</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    body, html {
-      height: 100%;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: white;
-      overflow-x: hidden;
-      overflow-y: auto;
-    }
+    body, html {
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+      overflow: hidden;
+    }
 
-    #bg-video {
-      position: fixed;
-      right: 0;
-      bottom: 0;
-      min-width: 100%;
-      min-height: 100%;
-      object-fit: cover;
-      z-index: -1;
-    }
+    #bg-video {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
 
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: rgba(0, 0, 0, 0.65);
-      z-index: 0;
-    }
+    body::before {
+      content: "";
+      position: fixed;
+      top:0; left:0; right:0; bottom:0;
+      background-color: rgba(0,0,0,0.75);
+      z-index: 0;
+    }
 
-    .container {
-      position: relative;
-      z-index: 1;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 1.5rem;
-      text-align: center;
-      padding: 1rem;
-    }
+    .container {
+      position: relative;
+      z-index: 1;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+      text-align: center;
+      padding: 0 1rem;
+    }
 
-    h1 {
-      font-size: 3rem;
-      font-weight: bold;
-      text-shadow: 3px 3px 12px rgba(0,0,0,0.8);
-      margin-bottom: 1.5rem;
-    }
+    h1 {
+      font-size: 3.5rem;
+      font-weight: bold;
+      text-shadow: 3px 3px 12px rgba(0,0,0,0.8);
+      margin-bottom: 1rem;
+    }
 
-    .btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      padding: 0.8rem 2rem;
-      font-size: 1rem;
-      font-weight: bold;
-      color: #fff;
-      background: linear-gradient(135deg, #6a11cb, #2575fc);
-      border: none;
-      border-radius: 60px;
-      cursor: pointer;
-      text-decoration: none;
-      box-shadow: 0 8px 22px rgba(101, 69, 255, 0.4);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 1rem 2.5rem;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #fff;
+      background: linear-gradient(135deg, #00c9ff, #92fe9d);
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 8px 22px rgba(0, 201, 255, 0.3);
+      transition: all 0.3s ease;
+    }
 
-    .btn:hover {
-      transform: scale(1.1);
-      box-shadow: 0 12px 30px rgba(101, 69, 255, 0.6);
-    }
+    .btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 12px 30px rgba(0, 201, 255, 0.5);
+    }
 
-    .btn svg {
-      width: 26px;
-      height: 26px;
-      fill: white;
-      flex-shrink: 0;
-    }
+    .btn svg {
+      width: 22px;
+      height: 22px;
+      fill: white;
+    }
 
-    .rainken-btn {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      background: linear-gradient(135deg, #ff0080, #7928ca);
-      color: white;
-      padding: 1rem 2rem;
-      font-size: 1.1rem;
-      font-weight: bold;
-      border-radius: 40px;
-      text-decoration: none;
-      z-index: 999;
-      box-shadow: 0 0 20px rgba(255, 0, 128, 0.5);
-      animation: pulse 2s infinite;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+    .rainken-btn {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      background: linear-gradient(135deg, #ff0080, #7928ca);
+      color: white;
+      padding: 0.8rem 1.6rem;
+      font-size: 0.95rem;
+      font-weight: bold;
+      border-radius: 999px;
+      text-decoration: none;
+      z-index: 999;
+      box-shadow: 0 0 20px rgba(255, 0, 128, 0.5);
+      animation: pulse 2s infinite;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-    .rainken-btn .tag {
-      font-size: 0.75rem;
-      background: rgba(255, 255, 255, 0.2);
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-style: italic;
-    }
+    .rainken-btn .tag {
+      font-size: 0.7rem;
+      background: rgba(255,255,255,0.2);
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-style: italic;
+    }
 
-    @keyframes pulse {
-      0% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 0, 128, 0.5); }
-      50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 0, 128, 0.8); }
-      100% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 0, 128, 0.5); }
-    }
-
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2.2rem;
-      }
-      .btn {
-        padding: 0.6rem 1.5rem;
-        font-size: 0.95rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 1.8rem;
-      }
-      .btn {
-        padding: 0.5rem 1.2rem;
-        font-size: 0.9rem;
-        flex-direction: column;
-        gap: 6px;
-      }
-    }
-  </style>
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 0, 128, 0.5); }
+      50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 0, 128, 0.8); }
+      100% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 0, 128, 0.5); }
+    }
+  </style>
 </head>
 <body>
-  <a href="https://raikken-api.speedhosting.cloud/" target="_blank" class="rainken-btn">
-    🔗 Rainken API <span class="tag">ʳᵉᶜᵒᵐᵉⁿᵈᵃᵈᵃ</span>
-  </a>
+  <a href="https://raikken-api.speedhosting.cloud/" target="_blank" class="rainken-btn">
+    🔗 Rainken API <span class="tag">recomendada</span>
+  </a>
 
-  <video autoplay muted loop id="bg-video">
-    <source src="obito.mp4" type="video/mp4">
-    Seu navegador não suporta vídeo em HTML5.
-  </video>
+  <video autoplay muted loop id="bg-video">
+    <source src="obito.mp4" type="video/mp4">
+    Seu navegador não suporta vídeo HTML5.
+  </video>
 
-  <div class="container">
-    <h1>PdrModz</h1>
+    <a href="https://www.instagram.com/__pedrosantosvl" target="_blank" class="btn">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224,202.66A53.34,53.34,0,1,0,277.34,256,53.38,53.38,0,0,0,224,202.66Zm124.71-41a54,54,0,0,0-30.36-30.36C296.59,124,224,124,224,124s-72.59,0-94.35,7.34a54,54,0,0,0-30.36,30.36C92,146.41,92,192,92,192s0,45.59,7.34,67.35a54,54,0,0,0,30.36,30.36C151.41,296,224,296,224,296s72.59,0,94.35-7.34a54,54,0,0,0,30.36-30.36C356,237.59,356,192,356,192S356,146.41,348.71,161.66ZM224,272a80,80,0,1,1,80-80A80,80,0,0,1,224,272Zm88-144a16,16,0,1,1,16-16A16,16,0,0,1,312,128Z"/></svg>
+      Instagram
+    </a>
 
-    <a href="https://www.instagram.com/__pedrosantosvl" target="_blank" class="btn">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="..."/></svg>
-      Instagram
-    </a>
+    <a href="https://wa.me/555192610121" target="_blank" class="btn">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M380.9 97.1C339-13.5 214.2-35.3 123.6 15.4 47.3 57.5 4.4 134.8 16.6 217.4c5.2 35.2 20.1 67.5 42.6 93.6L16 496l191.7-41.3c25.5 7.1 52.6 10.8 80.1 10.8 130.1 0 235.8-105.7 235.8-235.8 0-62.8-24.8-121.7-65.7-165.6z"/></svg>
+      WhatsApp
+    </a>
 
-    <a href="https://wa.me/555192610121" target="_blank" class="btn">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="..."/></svg>
-      WhatsApp
-    </a>
+    <a href="https://chat.whatsapp.com/JdtbtGsCZ6pGdOVVF6i8xS" target="_blank" class="btn">
+      Grupo WhatsApp
+    </a>
 
-    <a href="https://chat.whatsapp.com/JdtbtGsCZ6pGdOVVF6i8xS" target="_blank" class="btn">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="..."/></svg>
-      Grupo WhatsApp
-    </a>
+    <a href="cases.js" download class="btn">
+      Baixar Cases.js
+    </a>
 
-    <a href="https://wa.me/555192610121" target="_blank" class="btn">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="..."/></svg>
-      adquirir bot
-    </a>
-
-    <a href="cases.js" download class="btn">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="..."/></svg>
-      Download Cases.js
-    </a>
-
-    <a href="https://www.youtube.com/@PdrModz" target="_blank" class="btn">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="..."/></svg>
-      Meu canal
-    </a>
-  </div>
+    <a href="https://www.youtube.com/@PdrModz" target="_blank" class="btn">
+      Meu Canal no YouTube
+    </a>
+  </div>
 </body>
 </html>
