@@ -11,7 +11,7 @@
       box-sizing: border-box;
     }
 
-    body, html {
+    html, body {
       height: 100%;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: white;
@@ -31,8 +31,8 @@
     body::before {
       content: "";
       position: fixed;
-      top:0; left:0; right:0; bottom:0;
-      background-color: rgba(0,0,0,0.45); /* Mais leve */
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0, 0, 0, 0.45);
       z-index: 0;
     }
 
@@ -46,13 +46,13 @@
       align-items: center;
       gap: 1.5rem;
       text-align: center;
-      padding: 0 1rem;
+      padding: 1rem;
     }
 
     h1 {
       font-size: 3.5rem;
       font-weight: bold;
-      text-shadow: 3px 3px 12px rgba(0,0,0,0.8);
+      text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.8);
       margin-bottom: 1rem;
     }
 
@@ -70,18 +70,18 @@
       border-radius: 50px;
       cursor: pointer;
       text-decoration: none;
-      box-shadow: 0 0 10px rgba(0,201,255,0.2);
+      box-shadow: 0 0 10px rgba(0, 201, 255, 0.2);
       backdrop-filter: blur(8px);
       transition: all 0.3s ease;
     }
 
     .btn:hover {
       transform: scale(1.08);
-      box-shadow: 0 0 20px rgba(0,201,255,0.5);
+      box-shadow: 0 0 20px rgba(0, 201, 255, 0.5);
     }
 
     .btn:active {
-      box-shadow: 0 0 25px rgba(0,255,255,0.8);
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.8);
       transform: scale(1.03);
     }
 
@@ -92,9 +92,6 @@
     }
 
     .rainken-btn {
-      position: fixed;
-      top: 15px;
-      left: 15px;
       background: linear-gradient(135deg, #ff0080, #7928ca);
       color: white;
       padding: 0.8rem 1.6rem;
@@ -102,17 +99,17 @@
       font-weight: bold;
       border-radius: 999px;
       text-decoration: none;
-      z-index: 999;
       box-shadow: 0 0 20px rgba(255, 0, 128, 0.5);
       animation: pulse 2s infinite;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 8px;
+      margin-top: auto;
     }
 
     .rainken-btn .tag {
       font-size: 0.7rem;
-      background: rgba(255,255,255,0.2);
+      background: rgba(255, 255, 255, 0.2);
       padding: 3px 8px;
       border-radius: 999px;
       font-style: italic;
@@ -126,33 +123,20 @@
   </style>
 </head>
 <body>
-  <a href="https://raikken-api.speedhosting.cloud/" target="_blank" class="rainken-btn">
-    🔗 Rainken API <span class="tag">recomendada</span>
-  </a>
-
   <video autoplay muted loop id="bg-video">
     <source src="obito.mp4" type="video/mp4">
     Seu navegador não suporta vídeo HTML5.
   </video>
 
-    <a href="https://www.instagram.com/__pedrosantosvl" target="_blank" class="btn">
-      Instagram
-    </a>
+    <a href="https://www.instagram.com/__pedrosantosvl" target="_blank" class="btn">Instagram</a>
+    <a href="https://wa.me/555192610121" target="_blank" class="btn">WhatsApp</a>
+    <a href="https://chat.whatsapp.com/JdtbtGsCZ6pGdOVVF6i8xS" target="_blank" class="btn">Grupo WhatsApp</a>
+    <a href="cases.js" download class="btn">Baixar Cases.js</a>
+    <a href="https://www.youtube.com/@PdrModz" target="_blank" class="btn">Meu Canal no YouTube</a>
 
-    <a href="https://wa.me/555192610121" target="_blank" class="btn">
-      WhatsApp
-    </a>
-
-    <a href="https://chat.whatsapp.com/JdtbtGsCZ6pGdOVVF6i8xS" target="_blank" class="btn">
-      Grupo WhatsApp
-    </a>
-
-    <a href="cases.js" download class="btn">
-      Baixar Cases.js
-    </a>
-
-    <a href="https://www.youtube.com/@PdrModz" target="_blank" class="btn">
-      Meu Canal no YouTube
+    <!-- Rainken agora fica embaixo -->
+    <a href="https://raikken-api.speedhosting.cloud/" target="_blank" class="rainken-btn">
+      🔗 Rainken API <span class="tag">recomendada</span>
     </a>
   </div>
 </body>
