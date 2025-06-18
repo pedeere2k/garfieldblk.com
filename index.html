@@ -86,6 +86,38 @@
       fill: white;
       flex-shrink: 0;
     }
+    .rainken-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: linear-gradient(135deg, #ff0080, #7928ca);
+  color: white;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 40px;
+  text-decoration: none;
+  z-index: 999;
+  box-shadow: 0 0 20px rgba(255, 0, 128, 0.5);
+  animation: pulse 2s infinite;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rainken-btn .tag {
+  font-size: 0.75rem;
+  background: rgba(255,255,255,0.2);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-style: italic;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 0, 128, 0.5); }
+  50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 0, 128, 0.8); }
+  100% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 0, 128, 0.5); }
+}
   </style>
 </head>
 <body>
