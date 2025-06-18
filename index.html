@@ -92,6 +92,10 @@
     }
 
     .rainken-btn {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
       background: linear-gradient(135deg, #ff0080, #7928ca);
       color: white;
       padding: 0.8rem 1.6rem;
@@ -104,7 +108,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      margin-top: auto;
+      z-index: 999;
     }
 
     .rainken-btn .tag {
@@ -116,9 +120,9 @@
     }
 
     @keyframes pulse {
-      0% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 0, 128, 0.5); }
-      50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 0, 128, 0.8); }
-      100% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 0, 128, 0.5); }
+      0% { transform: translateX(-50%) scale(1); box-shadow: 0 0 20px rgba(255, 0, 128, 0.5); }
+      50% { transform: translateX(-50%) scale(1.05); box-shadow: 0 0 30px rgba(255, 0, 128, 0.8); }
+      100% { transform: translateX(-50%) scale(1); box-shadow: 0 0 20px rgba(255, 0, 128, 0.5); }
     }
   </style>
 </head>
@@ -133,11 +137,11 @@
     <a href="https://chat.whatsapp.com/JdtbtGsCZ6pGdOVVF6i8xS" target="_blank" class="btn">Grupo WhatsApp</a>
     <a href="cases.js" download class="btn">Baixar Cases.js</a>
     <a href="https://www.youtube.com/@PdrModz" target="_blank" class="btn">Meu Canal no YouTube</a>
-
-    <!-- Rainken agora fica embaixo -->
-    <a href="https://raikken-api.speedhosting.cloud/" target="_blank" class="rainken-btn">
-      🔗 Rainken API <span class="tag">recomendada</span>
-    </a>
   </div>
+
+  <!-- Botão Rainken API fixo no rodapé -->
+  <a href="https://raikken-api.speedhosting.cloud/" target="_blank" class="rainken-btn">
+    🔗 Rainken API <span class="tag">recomendada</span>
+  </a>
 </body>
 </html>
