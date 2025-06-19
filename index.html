@@ -2,150 +2,187 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8" />
-<title>Amor Animado ❤️</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Coração Galáctico ❤️</title>
 
 <style>
-  /* ---------- Variáveis de cor ---------- */
-  :root {
-    --heart-color: #ff3366;
-    --bg-color:   #111827; /* cinza-azulado escuro */
-    --text-color: #f9fafb; /* quase branco */
-  }
+:root {
+  --heart-color: #ff2966;
+  --heart-highlight: #ff5f8d;
+  --bg-top: #0d0d1a;
+  --bg-bottom: #030308;
+  --text-light: #f9fafb;
+}
 
-  /* ---------- Reset / Layout ---------- */
-  html, body {
-    height: 100%;
-    margin: 0;
-    display: grid;
-    place-items: center;
-    background: var(--bg-color);
-    font-family: "Segoe UI", Roboto, Arial, sans-serif;
-  }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  height: 100%;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: radial-gradient(ellipse at top, var(--bg-top) 0%, var(--bg-bottom) 100%);
+  color: var(--text-light);
+}
 
-  .stage {
-    text-align: center;
-  }
+.galaxy, .stars, .stars2, .stars3 {
+  position: fixed;
+  top: 0; left: 0;
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+  z-index: -5;
+}
 
-  /* ---------- Coração estiloso ---------- */
-  .heart {
-    position: relative;
-    width: 200px;
-    height: 180px;
-    transform: rotate(-45deg);
-    animation: beat 1.5s ease-in-out infinite;
-  }
+.stars, .stars2, .stars3 {
+  background-repeat: repeat;
+  animation: moveStars 160s linear infinite;
+}
+.stars  {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='2' height='2'><circle cx='1' cy='1' r='1' fill='white'/></svg>");
+  opacity: .8;
+}
+.stars2 {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='3' height='3'><circle cx='1.5' cy='1.5' r='1.5' fill='white'/></svg>");
+  opacity: .5;
+  animation-duration: 240s;
+}
+.stars3 {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='4' height='4'><circle cx='2' cy='2' r='2' fill='white'/></svg>");
+  opacity: .3;
+  animation-duration: 320s;
+}
 
-  .heart,
-  .heart::before,
-  .heart::after {
-    background: radial-gradient(circle at 30% 30%, #ff80a1 0%, var(--heart-color) 60%);
-  }
+@keyframes moveStars {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-50%); }
+}
 
-  .heart::before,
-  .heart::after {
-    content: "";
-    position: absolute;
-    width: 200px;
-    height: 180px;
-    border-radius: 50%;
-  }
+.heart-wrapper {
+  text-align: center;
+}
+.heart {
+  position: relative;
+  width: 240px;
+  height: 220px;
+  transform: rotate(-45deg);
+  animation: beat 1.6s ease-in-out infinite, glow 3s ease-in-out infinite;
+}
+.heart,
+.heart::before,
+.heart::after {
+  background: radial-gradient(circle at 30% 30%, var(--heart-highlight) 0%, var(--heart-color) 70%);
+}
+.heart::before,
+.heart::after {
+  content: '';
+  position: absolute;
+  width: 240px;
+  height: 220px;
+  border-radius: 50%;
+}
+.heart::before { left: 120px; }
+.heart::after  { top: -120px; transform: rotate(90deg); }
 
-  .heart::before { left: 100px; }
-  .heart::after  { top: -100px; transform: rotate(90deg); }
+.heart,
+.heart::before,
+.heart::after {
+  box-shadow:
+    0 0 10px   var(--heart-color),
+    0 0 25px   var(--heart-color),
+    0 0 60px   rgba(255, 41, 102, .65);
+}
 
-  /* Halo de luz (pseudo-elemento invisível mas com sombras) */
-  .heart::after,
-  .heart::before,
-  .heart {
-    box-shadow:
-      0 0 15px 2px var(--heart-color),
-      0 0 40px 4px rgba(255, 51, 102, .4);
-  }
+.heart > span {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  pointer-events: none;
+  color: var(--text-light);
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-align: center;
+  width: 160px;
+}
 
-  /* Texto dentro — aparece depois de 2 s */
-  .heart > span {
-    position: absolute;
-    top: 50%;  left: 50%;
-    transform: translate(-50%, -50%) rotate(45deg);
-    color: var(--text-color);
-    font-weight: 700;
-    font-size: 1.1rem;
-    text-align: center;
-    width: 150px;
-    opacity: 0;
-    animation: fadeIn 1s 2s forwards;
-    pointer-events: none;
-  }
+@keyframes beat {
+  0%,100% { transform: rotate(-45deg) scale(1); }
+  25%     { transform: rotate(-45deg) scale(1.15); }
+  50%     { transform: rotate(-45deg) scale(1.05); }
+}
+@keyframes glow {
+  0%,100% { filter: drop-shadow(0 0 10px var(--heart-color)); }
+  50%     { filter: drop-shadow(0 0 25px var(--heart-color)); }
+}
 
-  /* ---------- Botão ---------- */
-  #cta {
-    margin-top: 2.5rem;
-    padding: 0.9rem 2.2rem;
-    border: none;
-    border-radius: 12px;
-    font-size: 1.05rem;
-    cursor: pointer;
-    background: linear-gradient(145deg, #2563eb, #0ea5e9);
-    color: #fff;
-    letter-spacing: .5px;
-    transition: transform .25s, box-shadow .25s;
-    opacity: 0;
-    animation: fadeIn 1s 3.5s forwards; /* aparece depois */
-  }
+#cta {
+  margin-top: 3rem;
+  padding: 1rem 2.5rem;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #2563eb 0%, #0ea5e9 100%);
+  color: #fff;
+  font-size: 1.05rem;
+  letter-spacing: .5px;
+  cursor: pointer;
+  transition: transform .25s, box-shadow .25s;
+  opacity: 0;
+  animation: fadeIn 1.2s 2.5s forwards;
+}
+#cta:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0,0,0,.35);
+}
 
-  #cta:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 20px rgba(0,0,0,.3);
-  }
+@keyframes fadeIn { to { opacity: 1; } }
 
-  /* ---------- Keyframes ---------- */
-  @keyframes beat {
-    0%, 100%   { transform: rotate(-45deg) scale(1);    }
-    25%        { transform: rotate(-45deg) scale(1.12); }
-    50%        { transform: rotate(-45deg) scale(1.05); }
-  }
-
-  @keyframes fadeIn {
-    to { opacity: 1; }
-  }
-
+.modal {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(.8);
+  background: #fff;
+  color: #111;
+  padding: 1.6rem 2.3rem;
+  border-radius: 28px; /* Borda arredondada aumentada aqui */
+  box-shadow: 0 20px 60px rgba(0,0,0,.45);
+  font-weight: 500;
+  z-index: 999;
+  opacity: 0;
+  animation: pop .5s forwards;
+}
+@keyframes pop {
+  to { opacity:1; transform:translate(-50%, -50%) scale(1); }
+}
 </style>
 </head>
-
 <body>
-  <div class="stage">
-    <div class="heart">
-      <span>vai tomar<br>no cu</span>
-    </div>
 
-    <button id="cta">Clique aqui</button>
+<div class="galaxy">
+  <div class="stars"></div>
+  <div class="stars2"></div>
+  <div class="stars3"></div>
+</div>
+
+<div class="heart-wrapper">
+  <div class="heart">
+    <span>vai tomar<br>no cu</span>
   </div>
 
-<script>
-  document.querySelector('#cta').addEventListener('click', () => {
-    /* Mensagem carinhosa em um modal simples */
-    const box = document.createElement('div');
-    box.textContent = 'Você é espetacular! Receba meu afago ❤️';
-    Object.assign(box.style, {
-      position: 'fixed',
-      top: '50%', left: '50%',
-      transform: 'translate(-50%, -50%)',
-      background: '#fff',
-      color: '#111',
-      padding: '1.4rem 2rem',
-      borderRadius: '16px',
-      fontSize: '1rem',
-      fontWeight: '500',
-      boxShadow: '0 15px 40px rgba(0,0,0,.45)',
-      zIndex: 9999,
-      opacity: 0,
-      animation: 'fadeIn .6s forwards'
-    });
-    document.body.appendChild(box);
+  <button id="cta">Clique aqui</button>
+</div>
 
-    /* Some o alerta depois de 3 s */
-    setTimeout(() => box.remove(), 3000);
-  });
+<script>
+document.getElementById('cta').addEventListener('click', () => {
+  const modal = document.createElement('div');
+  modal.className = 'modal';
+  modal.textContent = 'Você é incrível! Receba meu afago ❤️';
+  document.body.appendChild(modal);
+
+  const remove = () => modal.remove();
+  modal.addEventListener('click', remove);
+  setTimeout(remove, 4000);
+});
 </script>
 </body>
+</html></body>
 </html>
