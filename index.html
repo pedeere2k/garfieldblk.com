@@ -1,99 +1,134 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!DOCTYPE html><html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CHERRY API</title>
-
-  <!-- Firebase (versão compat) -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cherry API - Painel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
-
   <style>
-    *{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
-    body,html{height:100%;overflow:hidden}
-    body{background:rgba(0,0,0,.7);color:#fff;position:relative}
-    video.bg-video{position:fixed;inset:0;width:100vw;height:100vh;object-fit:cover;z-index:-1}
-
-    .menu-toggle{position:absolute;top:10px;left:10px;z-index:2;font-size:30px;padding:5px 10px;border-radius:10px;
-                 background:rgba(0,0,0,.5);cursor:pointer}
-
-    /* painel já visível */
-    .container{display:flex;height:100vh}
-
-    .sidebar{width:250px;background:rgba(128,0,64,.85);padding:20px;display:flex;flex-direction:column;
-             position:fixed;inset:0 0 0 0;transform:translateX(-100%);transition:.3s}
-    .sidebar.active{transform:translateX(0)}
-    .sidebar h2{margin-bottom:20px;font-size:24px;text-align:center}
-    .sidebar a{color:#fff;text-decoration:none;margin:10px 0;padding:10px;background:#99004d;border-radius:5px;
-               position:relative;overflow:hidden;text-align:center}
-    .sidebar a::before,.btn::before{content:"";position:absolute;inset:-2px;background:linear-gradient(45deg,#ff00ff,#8000ff,#ff00ff);
-                                    z-index:-1;filter:blur(8px);opacity:.7;transition:opacity .4s}
-    .sidebar a:hover::before,.btn:hover::before{opacity:1}
-
-    .main{flex:1;margin-left:0;padding:30px;overflow-y:auto;height:100vh;backdrop-filter:blur(4px);transition:.3s}
-    .container.sidebar-open .main{margin-left:250px}
-
-    .section{margin-bottom:30px;background:rgba(42,42,42,.9);padding:20px;border-radius:10px}
-    h1,h3{color:#ff66a3}
-
-    .btn{display:inline-block;margin:10px 0;padding:10px 20px;color:#fff;background:#8000ff;border:none;
-         border-radius:10px;position:relative;overflow:hidden;cursor:pointer}
-
-    input,select{padding:10px;margin:5px 0;border:none;border-radius:8px}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body, html {
+      height: 100%;
+      background: #121212;
+      color: #fff;
+    }
+    video.bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 25px;
+      margin: 10px 0;
+      background: linear-gradient(135deg, #8e2de2, #4a00e0);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    }
+    .sidebar a, .logout {
+      background: linear-gradient(135deg, #ff0066, #ff3300);
+      color: white;
+      font-weight: 600;
+      text-align: center;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .sidebar a:hover, .logout:hover {
+      background: linear-gradient(135deg, #ff3300, #ff0066);
+      transform: scale(1.05);
+    }
+    .logout {
+      cursor: pointer;
+    }
+    .btn.cancel {
+      background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    }
+    #pixModal .btn {
+      margin-top: 15px;
+    }
+    #auth {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .auth-box {
+      background: rgba(0, 0, 0, 0.85);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255, 0, 128, 0.3);
+      width: 320px;
+    }
+    .auth-box h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #ff66a3;
+    }
+    .auth-box input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 10px;
+      border: none;
+    }
+    .switch {
+      text-align: center;
+      margin-top: 10px;
+      color: #ccc;
+      cursor: pointer;
+    }
+    .switch:hover {
+      color: #fff;
+    }
   </style>
 </head>
 <body>
   <video autoplay muted loop class="bg-video">
-    <source src="obito.mp4" type="video/mp4" />
+    <source src="obito.mp4" type="video/mp4">
     Seu navegador não suporta vídeos em HTML5.
-  </video>
-
-  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-
-  <div class="container" id="dashboard">
-    <div class="sidebar" id="sidebar">
-      <h2>CHERRY API</h2>
-      <a href="#requests">Requests</a>
-      <a href="#comprar">Comprar</a>
-      <a href="#verificar">Verificar Key</a>
-      <a href="#painel">Painel</a>
+  </video>  <div id="auth">
+    <div class="auth-box" id="loginBox">
+      <h2 id="authTitle">Entrar</h2>
+      <input type="email" id="email" placeholder="E-mail" />
+      <input type="password" id="senha" placeholder="Senha" />
+      <button class="btn" id="authBtn" onclick="doAuth()">Entrar</button>
+      <div class="switch" onclick="toggleAuth()">Criar conta</div>
     </div>
-
-    <div class="main">
-      <!-- SECTION: Requests -->
-      <div class="section" id="requests">
-        <h1>Seus Requests</h1>
-        <p id="reqCount">Carregando…</p>
-      </div>
-
-      <!-- SECTION: Comprar -->
-      <div class="section" id="comprar">
-        <h1>Comprar Requests</h1>
-        <p>Pix: <strong>71507bca-e2ec-41c6-8335-b0cf6bf6ea10</strong></p>
-        <div class="btn">R$1 — 1000 Requests</div>
-        <div class="btn">R$5 — 5000 Requests</div>
-        <div class="btn">R$10 — 10000 Requests</div>
-      </div>
-
-      <!-- SECTION: Verificar Key -->
-      <div class="section" id="verificar">
-        <h1>Verificar Key</h1>
-        <input type="text" id="verifyKey" placeholder="Digite sua API Key" />
-        <button class="btn" onclick="verificarKey()">Verificar</button>
-        <p id="verifMsg"></p>
-      </div>
-
-      <!-- SECTION: Painel -->
-      <div class="section" id="painel">
-        <h1>Painel</h1>
-        <ul id="painelUsers"></ul>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    /* --- Firebase --- */
+  </div>  <div style="padding: 50px; z-index:2; position: relative; display: none;" id="mainPanel">
+    <button class="btn" onclick="comprar(1000, 1)">Comprar 1000 Requests (R$1)</button>
+    <button class="btn" onclick="comprar(5000, 5)">Comprar 5000 Requests (R$5)</button>
+    <a href="https://wa.me/555192610121" class="btn" target="_blank">Suporte WhatsApp</a>
+    <button class="btn cancel" onclick="logout()">Sair</button>
+  </div>  <script>
     const firebaseConfig = {
       apiKey: "AIzaSyC15T_hktbe-M5mZs-IKEDmj0mN3ddSOKY",
       authDomain: "cherry-api-d04dd.firebaseapp.com",
@@ -104,59 +139,52 @@
       appId: "1:396845567550:web:6c17ed2af1d659149d8b6f"
     };
     firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
     const db = firebase.database();
 
-    /* --- UI --- */
-    function toggleMenu(){
-      document.getElementById('sidebar').classList.toggle('active');
-      document.getElementById('dashboard').classList.toggle('sidebar-open');
+    let isLogin = true;
+    function toggleAuth() {
+      isLogin = !isLogin;
+      document.getElementById('authTitle').innerText = isLogin ? 'Entrar' : 'Criar conta';
+      document.getElementById('authBtn').innerText = isLogin ? 'Entrar' : 'Cadastrar';
+      document.querySelector('.switch').innerText = isLogin ? 'Criar conta' : 'Já tem conta? Entrar';
     }
 
-    /* --- Lógica --- */
-    function verificarKey(){
-      const key = document.getElementById('verifyKey').value.trim();
-      db.ref("usuarios").once('value').then(snap=>{
-        const users = snap.val()||{};
-        let encontrado=false;
+    function doAuth() {
+      const email = document.getElementById('email').value.trim();
+      const senha = document.getElementById('senha').value.trim();
+      if (!email || !senha) return alert('Preencha os campos');
+      if (isLogin) {
+        auth.signInWithEmailAndPassword(email, senha).catch(e => alert(e.message));
+      } else {
+        auth.createUserWithEmailAndPassword(email, senha).then(cred => {
+          const key = genKey(32);
+          db.ref('usuarios/' + cred.user.uid).set({ email, key, requests: 0 });
+          alert('Conta criada! Sua chave: ' + key);
+        }).catch(e => alert(e.message));
+      }
+    }
 
-        Object.entries(users).forEach(([nome,data])=>{
-          if(data.key===key){
-            encontrado=true;
-            const reqs=data.requests||0;
-            const msgEl=document.getElementById('verifMsg');
-            if(reqs<=0){
-              msgEl.textContent='⚠️ Sua Key está sem requests disponíveis';
-              msgEl.style.color='orange';
-            }else{
-              msgEl.textContent=`✅ Sua API Key está funcionando. Você tem ${reqs} requests.`;
-              msgEl.style.color='lime';
-            }
-          }
-        });
-
-        if(!encontrado){
-          const msg=document.getElementById('verifMsg');
-          msg.textContent='❌ Sua API Key não está ativa';
-          msg.style.color='red';
-        }
+    function genKey(tam) {
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      let out = '';
+      crypto.getRandomValues(new Uint8Array(tam)).forEach(b => {
+        out += chars[b % chars.length];
       });
+      return out;
     }
 
-    function carregarPainel(){
-      const ul=document.getElementById('painelUsers');
-      db.ref("usuarios").once('value').then(snap=>{
-        ul.innerHTML='';
-        const users=snap.val()||{};
-        Object.entries(users).forEach(([nome,data])=>{
-          const li=document.createElement('li');
-          li.textContent=`${nome}: ${data.requests||0} requests`;
-          ul.appendChild(li);
-        });
-      });
+    function logout() {
+      auth.signOut();
     }
 
-    /* carrega painel ao abrir a página */
-    window.addEventListener('load',carregarPainel);
-  </script>
-</body>
+    auth.onAuthStateChanged(user => {
+      document.getElementById('auth').style.display = user ? 'none' : 'flex';
+      document.getElementById('mainPanel').style.display = user ? 'block' : 'none';
+    });
+
+    function comprar(qtd, preco) {
+      alert(`Pedido de ${qtd} requests por R$${preco} gerado! Aguarde integração com Pix...`);
+    }
+  </script></body>
 </html>
