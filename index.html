@@ -3,163 +3,297 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>API Portal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <title>CHERRY API</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * {margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif;}
+    body, html { height: 100%; overflow: hidden; }
     body {
-      font-family: 'Orbitron', sans-serif;
-      background: radial-gradient(#000000, #1a1a1a);
+      background: rgba(0,0,0,0.7);
       color: white;
-      overflow-x: hidden;
+      position: relative;
     }
-
-    header {
-      padding: 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: rgba(0, 0, 0, 0.8);
-    }
-
-    .menu-toggle {
-      font-size: 2rem;
-      cursor: pointer;
-    }
-
-    .sidebar {
+    video.bg-video {
       position: fixed;
       top: 0;
-      left: -250px;
-      width: 250px;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.9);
-      transition: 0.3s;
-      padding: 2rem 1rem;
-      z-index: 999;
-    }
-
-    .sidebar.active {
       left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
     }
-
-    .sidebar a {
-      display: block;
-      color: white;
-      margin: 1rem 0;
-      text-decoration: none;
-      font-size: 1.1rem;
+    .container {
+      display: none;
+      flex-direction: row;
+      height: 100vh;
     }
-
-    main {
-      padding: 2rem;
-      text-align: center;
-    }
-
-    .card {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 2rem;
-      border-radius: 10px;
-      margin-bottom: 2rem;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 20px #ff5f5f40;
-    }
-
-    input, button {
-      padding: 0.7rem;
-      border-radius: 8px;
-      border: none;
-      font-family: inherit;
-      font-size: 1rem;
-      margin-top: 1rem;
-    }
-
-    input {
-      width: 80%;
-      background: #111;
-      color: white;
-    }
-
-    button {
-      background: linear-gradient(45deg, #ff5f5f, #ffbb00);
-      color: black;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      transform: scale(1.05);
-    }
-
-    .ranking {
-      margin-top: 2rem;
-    }
-
-    .ranking .user {
+    .sidebar {
+      width: 250px;
+      background: rgba(128, 0, 64, 0.9);
+      padding: 20px;
       display: flex;
-      justify-content: space-between;
-      background: rgba(255, 255, 255, 0.08);
-      margin: 0.5rem 0;
-      padding: 1rem;
-      border-radius: 8px;
+      flex-direction: column;
+    }
+    .sidebar h2 { margin-bottom: 20px; font-size: 24px; text-align: center; }
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      margin: 10px 0;
+      padding: 10px;
+      background: #99004d;
+      border-radius: 5px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+    .sidebar a::before, .btn::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #ff00ff, #8000ff, #ff00ff);
+      z-index: -1;
+      filter: blur(8px);
+      opacity: 0.7;
+      transition: opacity 0.4s;
+    }
+    .sidebar a:hover::before, .btn:hover::before {
+      opacity: 1;
+    }
+    .main {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto;
+      backdrop-filter: blur(4px);
+    }
+    .section {
+      margin-bottom: 30px;
+      background: rgba(42, 42, 42, 0.9);
+      padding: 20px;
+      border-radius: 10px;
+    }
+    h1, h3 { color: #ff66a3; }
+    .pack-option {
+      margin: 10px 0;
+      padding: 10px;
+      background: #333;
+      border-radius: 5px;
+      position: relative;
+      overflow: hidden;
+    }
+    .pack-option::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #ff00ff, #8000ff, #ff00ff);
+      z-index: -1;
+      filter: blur(8px);
+      opacity: 0.7;
+    }
+    .auth-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0.8);
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+    .auth-container input {
+      margin: 10px;
+      padding: 10px;
+      width: 80%;
+      border-radius: 10px;
+      border: none;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 20px;
+      color: white;
+      background: #8000ff;
+      border: none;
+      border-radius: 10px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
+  <video autoplay muted loop class="bg-video">
+    <source src="obito.mp4" type="video/mp4">
+    Seu navegador não suporta vídeos em HTML5.
+  </video>
 
-  <header>
-    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-    <h2>API PORTAL</h2>
-  </header>
+  <div class="auth-container" id="auth">
+    <h2>Bem-vindo à CHERRY API</h2>
+    <input type="text" id="username" placeholder="Seu Nome">
+    <input type="password" id="password" placeholder="Sua Senha">
+    <br>
+    <button class="btn" onclick="login()">Login</button>
+    <button class="btn" onclick="register()">Criar Conta</button>
+    <p id="auth-msg"></p>
+  </div>
 
-  <nav class="sidebar" id="sidebar">
-    <a href="#">DOWNLOADS</a>
-    <a href="#">CANVAS</a>
-    <a href="#">OUTROS</a>
-    <a href="#">IA</a>
-    <a href="#">+18 Onlyfans</a>
-    <a href="#">+18 Sites</a>
-    <a href="#">+18 Hentai Sites</a>
-    <a href="#">+18 Hentai Imagens</a>
-    <a href="#">PUXAR DADOS</a>
-    <a href="#">CHAT</a>
-  </nav>
-
-  <main>
-    <div class="card">
-      <h3>VERIFICAR API KEY</h3>
-      <input type="text" placeholder="Insira sua API KEY">
-      <br>
-      <button>VERIFICAR</button>
+  <div class="container" id="dashboard">
+    <div class="sidebar">
+      <h2>CHERRY API</h2>
+      <a href="#requests">Requests</a>
+      <a href="#comprar">Comprar Requests</a>
+      <a href="#suporte">Suporte</a>
+      <a href="#packs">Packs de Cases</a>
+      <a href="#funcionalidades">Funcionalidades</a>
+      <a href="#admin" id="adminBtn" style="display:none">Admin</a>
     </div>
 
-    <div class="card">
-      <h3>Comprar / Ativar ApiKeys</h3>
-      <p>Clique no botão abaixo para acessar a página de ativação.</p>
-      <button>Clique aqui</button>
-    </div>
+    <div class="main">
+      <div id="requests" class="section">
+        <h1>Seus Requests</h1>
+        <p id="request-count"></p>
+      </div>
 
-    <section class="ranking">
-      <h3>Ranking de Uso da API</h3>
-      <div class="user">
-        <span>sz</span>
-        <span style="color: #ff7aff">852 requests</span>
+      <div id="comprar" class="section">
+        <h1>Comprar Requests</h1>
+        <p>Pix: <strong>71507bca-e2ec-41c6-8335-b0cf6bf6ea10</strong></p>
+        <div class="pack-option">R$1,00 - 1.000 Requests</div>
+        <div class="pack-option">R$2,00 - 2.000 Requests</div>
+        <div class="pack-option">R$3,00 - 3.000 Requests</div>
+        <div class="pack-option">R$4,00 - 4.000 Requests</div>
+        <div class="pack-option">R$5,00 - 5.000 Requests</div>
+        <div class="pack-option">R$10,00 - 10.000 Requests</div>
       </div>
-      <div class="user">
-        <span>indrxv</span>
-        <span style="color: #7affc1">727 requests</span>
+
+      <div id="suporte" class="section">
+        <h1>Suporte</h1>
+        <p>Entre em contato pelo nosso WhatsApp: <strong>(99) 99999-9999</strong></p>
       </div>
-    </section>
-  </main>
+
+      <div id="packs" class="section">
+        <h1>Packs de Cases</h1>
+        <ul>
+          <li><a href="#">Pack Completo - Download</a></li>
+          <li><a href="#">Pack +18 - Download</a></li>
+          <li><a href="#">Pack TikTok - Download</a></li>
+        </ul>
+      </div>
+
+      <div id="funcionalidades" class="section">
+        <h1>Funcionalidades da API</h1>
+        <h3>Downloads</h3>
+        <ul>
+          <li>download</li>
+          <li>play music</li>
+          <li>tiktok_video</li>
+          <li>tiktok_audio</li>
+          <li>playmp4</li>
+          <li>SnapTube</li>
+        </ul>
+
+        <h3>+18</h3>
+        <ul>
+          <li>onlyfans</li>
+          <li>plaqs</li>
+          <li>conteúdo adulto etc</li>
+        </ul>
+
+        <h3>Dados</h3>
+        <ul>
+          <li>cpf</li>
+          <li>cpf1</li>
+          <li>cpf2</li>
+          <li>cpf3</li>
+          <li>cpf4</li>
+          <li>cnpj</li>
+          <li>título</li>
+          <li>nome</li>
+          <li>parentes</li>
+          <li>mãe</li>
+          <li>pai</li>
+        </ul>
+      </div>
+
+      <div id="admin" class="section" style="display:none">
+        <h1>Painel do Dono</h1>
+        <p>Usuários ativos: <span id="user-count">0</span></p>
+        <ul id="user-list"></ul>
+        <h3>Adicionar Requests</h3>
+        <input type="text" id="targetUser" placeholder="Nome do usuário">
+        <input type="number" id="amount" placeholder="Quantidade">
+        <button class="btn" onclick="addRequests()">Adicionar</button>
+      </div>
+    </div>
+  </div>
 
   <script>
-    function toggleMenu() {
-      document.getElementById("sidebar").classList.toggle("active");
+    let users = JSON.parse(localStorage.getItem('cherry_users') || '{}');
+    let currentUser = null;
+
+    function register() {
+      const name = document.getElementById('username').value;
+      const pass = document.getElementById('password').value;
+      if (!name || !pass) return alert('Preencha todos os campos.');
+      if (users[name]) return alert('Usuário já existe!');
+
+      const key = Math.random().toString(36).substr(2, 12);
+      users[name] = { password: pass, key, requests: 100 };
+      localStorage.setItem('cherry_users', JSON.stringify(users));
+      document.getElementById('auth-msg').innerText = `Conta criada! Sua key: ${key}`;
+    }
+
+    function login() {
+      const name = document.getElementById('username').value;
+      const pass = document.getElementById('password').value;
+      if (users[name] && users[name].password === pass) {
+        currentUser = name;
+        document.getElementById('auth').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'flex';
+        updateRequestCount();
+        alert(`Login efetuado! Sua key: ${users[name].key}`);
+        if (name === 'admin') {
+          document.getElementById('adminBtn').style.display = 'block';
+          document.getElementById('admin').style.display = 'block';
+          updateUserList();
+        }
+      } else {
+        alert('Usuário ou senha incorretos');
+      }
+    }
+
+    function updateRequestCount() {
+      document.getElementById('request-count').innerText = `Você possui ${users[currentUser].requests} requests.`;
+      localStorage.setItem('cherry_users', JSON.stringify(users));
+    }
+
+    function updateUserList() {
+      document.getElementById('user-count').innerText = Object.keys(users).length;
+      const ul = document.getElementById('user-list');
+      ul.innerHTML = '';
+      for (let u in users) {
+        const li = document.createElement('li');
+        li.innerText = `${u} - ${users[u].requests} requests`;
+        ul.appendChild(li);
+      }
+    }
+
+    function addRequests() {
+      const target = document.getElementById('targetUser').value;
+      const amount = parseInt(document.getElementById('amount').value);
+      if (users[target]) {
+        users[target].requests += amount;
+        alert(`Adicionado ${amount} requests para ${target}`);
+        updateRequestCount();
+        updateUserList();
+      } else {
+        alert('Usuário não encontrado');
+      }
     }
   </script>
 </body>
