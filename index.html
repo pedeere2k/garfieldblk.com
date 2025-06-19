@@ -1,1 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Coração</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: #000;
+      font-family: 'Arial', sans-serif;
+    }
+    
+    canvas {
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 2s ease-in-out, transform 2s ease-in-out;
+    }
+    
+    canvas.loaded {
+      opacity: 1;
+      transform: scale(1);
+    }
+    
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, #1a0033, #000);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 1;
+      transition: opacity 1s ease-out;
+    }
+    
+    .loading-screen.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    .loading-text {
+      color: #ff69b4;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      opacity: 0;
+      animation: fadeInText 2s ease-in-out forwards;
+    }
+    
+    .loading-heart {
+      width: 60px;
+      height: 60px;
+      position: relative;
+      opacity: 0;
+      animation: fadeInHeart 2s ease-in-out 0.5s forwards, pulse 1.5s ease-in-out 2.5s infinite;
+    }
+    
+    .loading-heart::before,
+    .loading-heart::after {
+      content: '';
+      width: 30px;
+      height: 48px;
+      position: absolute;
+      left: 30px;
+      transform: rotate(-45deg);
+      background: linear-gradient(45deg, #ff1744, #ff69b4, #e91e63);
+      border-radius: 30px 30px 0 0;
+      transform-origin: 0 100%;
+    }
+    
+    .loading-heart::after {
+      left: 0;
+      transform: rotate(45deg);
+      transform-origin: 100% 100%;
+    }
+    
+    @keyframes fadeInText {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes fadeInHeart {
+      0% { opacity: 0; transform: scale(0.5); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    
+    .sparkle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #fff;
+      border-radius: 50%;
+      opacity: 0;
+      animation: sparkle 3s ease-in-out infinite;
+    }
+    
+    @keyframes sparkle {
+      0%, 100% { opacity: 0; transform: scale(0); }
+      50% { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-text">Preparando algo especial...</div>
+    <div class="loading-heart"></div>
+  </div>
+  
+  <canvas id="heart"></canvas>
+  
+  <script>
+    const canvas = document.getElementById('heart');
+    const ctx = canvas.getContext('2d');
+    const loadingScreen = document.getElementById('loadingScreen');
+    let width, height, points = [], particles = [], fallingTexts = [];
+
+    // Textos que vão cair
+    const loveTexts = ['eu te amo', 'I love you', '♥', 'amor', 'love', 'te amo', 'I ♥ U'];
+
+    function createSparkles() {
+      for (let i = 0; i < 20; i++) {
+        setTimeout(() => {
+          const sparkle = document.createElement('div');
+          sparkle.className = 'sparkle';
+          sparkle.style.left = Math.random() * window.innerWidth + 'px';
+          sparkle.style.top = Math.random() * window.innerHeight + 'px';
+          sparkle.style.animationDelay = Math.random() * 3 + 's';
+          loadingScreen.appendChild(sparkle);
+        }, i * 100);
+      }
+    }
+
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      generatePoints();
+      createParticles();
+    }
+
+    function heartPosition(t) {
+      return [
+        16 * Math.pow(Math.sin(t), 3),
+        -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t))
+      ];
+    }
+
+    function generatePoints() {
+      points = [];
+      for (let t = 0; t < Math.PI * 2; t += 0.1) {
+        const [x, y] = heartPosition(t);
+        points.push({ x: x * 10, y: y * 10 });
+      }
+    }
+
+    function createParticles() {
+      particles = [];
+      for (let i = 0; i < 200; i++) {
+        const p = points[Math.floor(Math.random() * points.length)];
+        particles.push({
+          x: width / 2,
+          y: height / 2,
+          tx: width / 2 + p.x,
+          ty: height / 2 + p.y,
+          vx: (Math.random() - 0.5) * 4,
+          vy: (Math.random() - 0.5) * 4,
+          life: Math.random() * 100 + 50,
+          color: `hsl(${Math.random() * 360}, 100%, 60%)`
+        });
+      }
+    }
+
+    function createFallingText() {
+      if (Math.random() < 0.02) { // 2% de chance a cada frame
+        fallingTexts.push({
+          text: loveTexts[Math.floor(Math.random() * loveTexts.length)],
+          x: Math.random() * width,
+          y: -50,
+          speed: Math.random() * 2 + 1,
+          opacity: Math.random() * 0.5 + 0.3,
+          fontSize: Math.random() * 20 + 16,
+          color: `hsl(${Math.random() * 60 + 300}, 70%, 70%)`, // Tons de rosa/roxo
+          rotation: Math.random() * 0.02 - 0.01
+        });
+      }
+    }
+
+    function updateFallingTexts() {
+      for (let i = fallingTexts.length - 1; i >= 0; i--) {
+        const text = fallingTexts[i];
+        text.y += text.speed;
+        text.opacity -= 0.002;
+        
+        if (text.y > height + 50 || text.opacity <= 0) {
+          fallingTexts.splice(i, 1);
+        }
+      }
+    }
+
+    function drawFallingTexts() {
+      fallingTexts.forEach(text => {
+        ctx.save();
+        ctx.globalAlpha = text.opacity;
+        ctx.font = `${text.fontSize}px Arial`;
+        ctx.fillStyle = text.color;
+        ctx.textAlign = 'center';
+        
+        // Adicionar um leve efeito de sombra
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+        ctx.shadowBlur = 5;
+        ctx.shadowOffsetX = 2;
+        ctx.shadowOffsetY = 2;
+        
+        ctx.fillText(text.text, text.x, text.y);
+        ctx.restore();
+      });
+    }
+
+    function draw() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+      ctx.fillRect(0, 0, width, height);
+
+      createFallingText();
+      updateFallingTexts();
+      
+      drawFallingTexts();
+
+      particles.forEach(p => {
+        const dx = p.tx - p.x;
+        const dy = p.ty - p.y;
+        p.vx += dx * 0.01;
+        p.vy += dy * 0.01;
+
+        p.vx *= 0.92;
+        p.vy *= 0.92;
+
+        p.x += p.vx;
+        p.y += p.vy;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+
+        if (Math.random() < 0.05) {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p.x + (Math.random() - 0.5) * 100, p.y + (Math.random() - 0.5) * 100);
+          ctx.strokeStyle = p.color;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+
+        p.life--;
+        if (p.life <= 0) {
+          const newP = points[Math.floor(Math.random() * points.length)];
+          p.tx = width / 2 + newP.x;
+          p.ty = height / 2 + newP.y;
+          p.life = Math.random() * 100 + 50;
+          p.color = `hsl(${Math.random() * 360}, 100%, 60%)`;
+        }
+      });
+
+      requestAnimationFrame(draw);
+    }
+
+    function startAnimation() {
+      setTimeout(() => {
+        loadingScreen.classList.add('hidden');
+        canvas.classList.add('loaded');
+        draw();
+      }, 3000);
+    }
+
+    window.addEventListener('resize', resize);
+
+    createSparkles();
+    resize();
+    startAnimation();
+  </script>
+</body>
+</html>
 
