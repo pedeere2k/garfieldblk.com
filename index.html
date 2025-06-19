@@ -1,123 +1,51 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CHERRY API</title>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js"></script>
+
+  <!-- Firebase (versão compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+
   <style>
-    * {margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif;}
-    body, html { height: 100%; overflow: hidden; }
-    body {
-      background: rgba(0,0,0,0.7);
-      color: white;
-      position: relative;
-    }
-    video.bg-video {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
-      z-index: -1;
-    }
-    .menu-toggle {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      z-index: 2;
-      cursor: pointer;
-      font-size: 30px;
-      background: rgba(0,0,0,0.5);
-      padding: 5px 10px;
-      border-radius: 10px;
-    }
-    .container {
-      display: none;
-      height: 100vh;
-    }
-    .sidebar {
-      width: 250px;
-      background: rgba(128, 0, 64, 0.85);
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      position: fixed;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      z-index: 1;
-      transform: translateX(-100%);
-      transition: transform 0.3s ease;
-    }
-    .sidebar.active { transform: translateX(0); }
-    .sidebar h2 { margin-bottom: 20px; font-size: 24px; text-align: center; }
-    .sidebar a {
-      color: white;
-      text-decoration: none;
-      margin: 10px 0;
-      padding: 10px;
-      background: #99004d;
-      border-radius: 5px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .sidebar a::before, .btn::before {
-      content: "";
-      position: absolute;
-      top: -2px;
-      left: -2px;
-      right: -2px;
-      bottom: -2px;
-      background: linear-gradient(45deg, #ff00ff, #8000ff, #ff00ff);
-      z-index: -1;
-      filter: blur(8px);
-      opacity: 0.7;
-      transition: opacity 0.4s;
-    }
-    .sidebar a:hover::before, .btn:hover::before { opacity: 1; }
-    .main {
-      margin-left: 0;
-      padding: 30px;
-      overflow-y: auto;
-      backdrop-filter: blur(4px);
-      height: 100vh;
-      transition: margin-left 0.3s ease;
-    }
-    .container.sidebar-open .main { margin-left: 250px; }
-    .section {
-      margin-bottom: 30px;
-      background: rgba(42, 42, 42, 0.9);
-      padding: 20px;
-      border-radius: 10px;
-    }
-    h1, h3 { color: #ff66a3; }
-    .btn {
-      display: inline-block;
-      margin: 10px 0;
-      padding: 10px 20px;
-      color: white;
-      background: #8000ff;
-      border: none;
-      border-radius: 10px;
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-    }
-    input, select {
-      padding: 10px;
-      margin: 5px 0;
-      border-radius: 8px;
-      border: none;
-    }
+    *{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
+    body,html{height:100%;overflow:hidden}
+    body{background:rgba(0,0,0,.7);color:#fff;position:relative}
+    video.bg-video{position:fixed;inset:0;width:100vw;height:100vh;object-fit:cover;z-index:-1}
+
+    .menu-toggle{position:absolute;top:10px;left:10px;z-index:2;font-size:30px;padding:5px 10px;border-radius:10px;
+                 background:rgba(0,0,0,.5);cursor:pointer}
+
+    /* painel já visível */
+    .container{display:flex;height:100vh}
+
+    .sidebar{width:250px;background:rgba(128,0,64,.85);padding:20px;display:flex;flex-direction:column;
+             position:fixed;inset:0 0 0 0;transform:translateX(-100%);transition:.3s}
+    .sidebar.active{transform:translateX(0)}
+    .sidebar h2{margin-bottom:20px;font-size:24px;text-align:center}
+    .sidebar a{color:#fff;text-decoration:none;margin:10px 0;padding:10px;background:#99004d;border-radius:5px;
+               position:relative;overflow:hidden;text-align:center}
+    .sidebar a::before,.btn::before{content:"";position:absolute;inset:-2px;background:linear-gradient(45deg,#ff00ff,#8000ff,#ff00ff);
+                                    z-index:-1;filter:blur(8px);opacity:.7;transition:opacity .4s}
+    .sidebar a:hover::before,.btn:hover::before{opacity:1}
+
+    .main{flex:1;margin-left:0;padding:30px;overflow-y:auto;height:100vh;backdrop-filter:blur(4px);transition:.3s}
+    .container.sidebar-open .main{margin-left:250px}
+
+    .section{margin-bottom:30px;background:rgba(42,42,42,.9);padding:20px;border-radius:10px}
+    h1,h3{color:#ff66a3}
+
+    .btn{display:inline-block;margin:10px 0;padding:10px 20px;color:#fff;background:#8000ff;border:none;
+         border-radius:10px;position:relative;overflow:hidden;cursor:pointer}
+
+    input,select{padding:10px;margin:5px 0;border:none;border-radius:8px}
   </style>
 </head>
 <body>
   <video autoplay muted loop class="bg-video">
-    <source src="obito.mp4" type="video/mp4">
+    <source src="obito.mp4" type="video/mp4" />
     Seu navegador não suporta vídeos em HTML5.
   </video>
 
@@ -133,26 +61,30 @@
     </div>
 
     <div class="main">
+      <!-- SECTION: Requests -->
       <div class="section" id="requests">
         <h1>Seus Requests</h1>
-        <p id="reqCount">Carregando...</p>
+        <p id="reqCount">Carregando…</p>
       </div>
 
+      <!-- SECTION: Comprar -->
       <div class="section" id="comprar">
         <h1>Comprar Requests</h1>
         <p>Pix: <strong>71507bca-e2ec-41c6-8335-b0cf6bf6ea10</strong></p>
-        <div class="btn">R$1 - 1000 Requests</div>
-        <div class="btn">R$5 - 5000 Requests</div>
-        <div class="btn">R$10 - 10000 Requests</div>
+        <div class="btn">R$1 — 1000 Requests</div>
+        <div class="btn">R$5 — 5000 Requests</div>
+        <div class="btn">R$10 — 10000 Requests</div>
       </div>
 
+      <!-- SECTION: Verificar Key -->
       <div class="section" id="verificar">
         <h1>Verificar Key</h1>
-        <input type="text" id="verifyKey" placeholder="Digite sua API Key">
+        <input type="text" id="verifyKey" placeholder="Digite sua API Key" />
         <button class="btn" onclick="verificarKey()">Verificar</button>
         <p id="verifMsg"></p>
       </div>
 
+      <!-- SECTION: Painel -->
       <div class="section" id="painel">
         <h1>Painel</h1>
         <ul id="painelUsers"></ul>
@@ -161,6 +93,7 @@
   </div>
 
   <script>
+    /* --- Firebase --- */
     const firebaseConfig = {
       apiKey: "AIzaSyC15T_hktbe-M5mZs-IKEDmj0mN3ddSOKY",
       authDomain: "cherry-api-d04dd.firebaseapp.com",
@@ -173,58 +106,57 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    function toggleMenu() {
-      const sidebar = document.getElementById('sidebar');
-      const container = document.getElementById('dashboard');
-      sidebar.classList.toggle('active');
-      container.classList.toggle('sidebar-open');
+    /* --- UI --- */
+    function toggleMenu(){
+      document.getElementById('sidebar').classList.toggle('active');
+      document.getElementById('dashboard').classList.toggle('sidebar-open');
     }
 
-    function verificarKey() {
+    /* --- Lógica --- */
+    function verificarKey(){
       const key = document.getElementById('verifyKey').value.trim();
-      db.ref("usuarios").once('value', snapshot => {
-        const users = snapshot.val() || {};
-        let found = false;
-        for (let nome in users) {
-          if (users[nome].key === key) {
-            found = true;
-            const reqs = users[nome].requests || 0;
-            const msg = document.getElementById('verifMsg');
-            if (reqs <= 0) {
-              msg.innerText = '⚠️ Sua Key está sem requests disponíveis';
-              msg.style.color = 'orange';
-            } else {
-              msg.innerText = `✅ Sua API Key está funcionando perfeitamente. Você tem ${reqs} requests.`;
-              msg.style.color = 'lime';
+      db.ref("usuarios").once('value').then(snap=>{
+        const users = snap.val()||{};
+        let encontrado=false;
+
+        Object.entries(users).forEach(([nome,data])=>{
+          if(data.key===key){
+            encontrado=true;
+            const reqs=data.requests||0;
+            const msgEl=document.getElementById('verifMsg');
+            if(reqs<=0){
+              msgEl.textContent='⚠️ Sua Key está sem requests disponíveis';
+              msgEl.style.color='orange';
+            }else{
+              msgEl.textContent=`✅ Sua API Key está funcionando. Você tem ${reqs} requests.`;
+              msgEl.style.color='lime';
             }
           }
-        }
-        if (!found) {
-          document.getElementById('verifMsg').innerText = '❌ Sua API Key não está ativa';
-          document.getElementById('verifMsg').style.color = 'red';
-        }
-      });
-    }
+        });
 
-    function carregarPainel() {
-      const painel = document.getElementById('painelUsers');
-      db.ref("usuarios").once('value', snapshot => {
-        const users = snapshot.val() || {};
-        painel.innerHTML = '';
-        for (let nome in users) {
-          const li = document.createElement('li');
-          li.innerText = `${nome}: ${users[nome].requests || 0} requests`;
-          painel.appendChild(li);
+        if(!encontrado){
+          const msg=document.getElementById('verifMsg');
+          msg.textContent='❌ Sua API Key não está ativa';
+          msg.style.color='red';
         }
       });
     }
 
-    function exibirDashboard() {
-      document.getElementById('dashboard').style.display = 'flex';
-      carregarPainel();
+    function carregarPainel(){
+      const ul=document.getElementById('painelUsers');
+      db.ref("usuarios").once('value').then(snap=>{
+        ul.innerHTML='';
+        const users=snap.val()||{};
+        Object.entries(users).forEach(([nome,data])=>{
+          const li=document.createElement('li');
+          li.textContent=`${nome}: ${data.requests||0} requests`;
+          ul.appendChild(li);
+        });
+      });
     }
 
-    window.onload = exibirDashboard;
+    /* carrega painel ao abrir a página */
+    window.addEventListener('load',carregarPainel);
   </script>
 </body>
 </html>
