@@ -1,128 +1,161 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Coração Galáctico Deluxe ❤️</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Coração Galáctico Deluxe ❤️</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --heart-main: #ff2d6f;
+      --heart-light: #ff77a1;
+      --btn-grad-a:  #3b82f6;
+      --btn-grad-b:  #0ea5e9;
+      --bg1:#0d0d1a;
+      --bg2:#02010f;
+      --text-light:#fafafa;
+    }
+    * {margin: 0; padding: 0; box-sizing: border-box;}
+    html, body {
+      height: 100%;
+      font-family: "Poppins", sans-serif;
+      overflow: hidden;
+      color: var(--text-light);
+      background: radial-gradient(ellipse at top,var(--bg1) 0%,var(--bg2) 100%);
+    }
 
-<!-- Google Font elegante -->
-<link rel="preconnect" href="https://fonts.gstatic.com" />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+    canvas#space {
+      position: fixed;
+      inset: 0;
+      z-index: -10;
+    }
 
-<style>
-/* ===== VARIÁVEIS & RESET ===== */
-:root{
-  --heart-main: #ff2d6f;
-  --heart-light: #ff77a1;
-  --btn-grad-a:  #3b82f6;
-  --btn-grad-b:  #0ea5e9;
-  --bg1:#0d0d1a;
-  --bg2:#02010f;
-  --text-light:#fafafa;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{height:100%;font-family:"Poppins",Arial,Helvetica,sans-serif;overflow:hidden;color:var(--text-light);}
+    .scene {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding-top: 6vh;
+      text-align: center;
+    }
 
-/* ===== FUNDO GALÁXIA ===== */
-body{
-  background:radial-gradient(ellipse at top,var(--bg1)0%,var(--bg2)100%);
-}
-canvas#space{
-  position:fixed;inset:0;z-index:-10;
-}
+    .heart {
+      position: relative;
+      width: 260px;
+      height: 240px;
+      transform: rotate(-45deg);
+      animation: beat 1.8s ease-in-out infinite, glow 3.2s ease-in-out infinite;
+    }
+    .heart, .heart::before, .heart::after {
+      background: radial-gradient(circle at 30% 30%, var(--heart-light) 0%, var(--heart-main) 70%);
+    }
+    .heart::before, .heart::after {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 240px;
+      border-radius: 50%;
+    }
+    .heart::before { left: 130px; }
+    .heart::after { top: -130px; transform: rotate(90deg); }
+    .heart, .heart::before, .heart::after {
+      box-shadow: 0 0 15px var(--heart-main), 0 0 40px var(--heart-main), 0 0 80px rgba(255,45,111,0.7);
+    }
+    .heart > span {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(45deg);
+      pointer-events: none;
+      text-align: center;
+      width: 180px;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
 
-/* ===== CORAÇÃO NEON ===== */
-.scene{position:relative;text-align:center;z-index:5;}
-.heart{
-  position:relative;width:260px;height:240px;
-  transform:rotate(-45deg);
-  animation:beat 1.8s ease-in-out infinite,glow 3.2s ease-in-out infinite;
-}
-.heart,.heart::before,.heart::after{
-  background:radial-gradient(circle at 30% 30%,var(--heart-light)0%,var(--heart-main)70%);
-}
-.heart::before,.heart::after{
-  content:"";position:absolute;width:260px;height:240px;border-radius:50%;
-}
-.heart::before{left:130px;}
-.heart::after{top:-130px;transform:rotate(90deg);}
-.heart,.heart::before,.heart::after{
-  box-shadow:
-    0 0 15px   var(--heart-main),
-    0 0 40px   var(--heart-main),
-    0 0 80px   rgba(255,45,111,.7);
-}
-/* texto interno */
-.heart > span{
-  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(45deg);
-  pointer-events:none;text-align:center;width:180px;font-size:1.2rem;font-weight:700;
-}
+    .particle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.8);
+      filter: blur(0.5px);
+      animation: up 6s linear infinite;
+    }
 
-/* ===== PARTÍCULAS SUBINDO ===== */
-.particle{
-  position:absolute;width:8px;height:8px;border-radius:50%;
-  background:rgba(255,255,255,.8);
-  filter:blur(0.5px);
-  animation:up 6s linear infinite;
-}
-@keyframes up{
-  from{transform:translateY(0) scale(1) rotate(0deg);opacity:1;}
-  to{transform:translateY(-120vh) scale(.4) rotate(360deg);opacity:0;}
-}
+    @keyframes up {
+      from {transform: translateY(0) scale(1) rotate(0deg); opacity: 1;}
+      to {transform: translateY(-120vh) scale(0.4) rotate(360deg); opacity: 0;}
+    }
 
-/* ===== BOTÃO LIQUID ===== */
-button#cta{
-  margin-top:3.5rem;padding:1rem 2.8rem;border:none;
-  border-radius:18px;font-size:1.1rem;font-weight:600;cursor:pointer;
-  background:linear-gradient(135deg,var(--btn-grad-a),var(--btn-grad-b));
-  color:#fff;letter-spacing:.4px;position:relative;overflow:hidden;
-  transition:transform .3s,box-shadow .3s;
-  animation:fadeIn 1.4s 2.6s forwards;opacity:0;
-}
-button#cta:hover{
-  transform:translateY(-5px);box-shadow:0 8px 25px rgba(0,0,0,.4);
-}
-button#cta::after{             /* bolha líquida */
-  content:"";position:absolute;left:-50%;top:-50%;width:200%;height:200%;
-  background:radial-gradient(circle at center,rgba(255,255,255,.35)0%,transparent 60%);
-  animation:liquid 6s linear infinite;
-}
-@keyframes liquid{
-  from{transform:rotate(0deg);}
-  to{transform:rotate(360deg);}
-}
+    button#cta {
+      margin-top: 3rem;
+      padding: 1rem 2.8rem;
+      border: none;
+      border-radius: 18px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: linear-gradient(135deg,var(--btn-grad-a),var(--btn-grad-b));
+      color: #fff;
+      letter-spacing: .4px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .3s, box-shadow .3s;
+      animation: fadeIn 1.4s 2.6s forwards;
+      opacity: 0;
+    }
+    button#cta:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,.4);
+    }
+    button#cta::after {
+      content: "";
+      position: absolute;
+      left: -50%;
+      top: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at center,rgba(255,255,255,.35) 0%,transparent 60%);
+      animation: liquid 6s linear infinite;
+    }
 
-/* ===== MODAL GLASSMORPH ===== */
-.modal{
-  position:fixed;top:50%;left:50%;
-  transform:translate(-50%,-50%) scale(.8);
-  padding:1.8rem 2.6rem;border-radius:32px;
-  backdrop-filter:blur(18px) saturate(180%);
-  background:rgba(255,255,255,.15);
-  border:1px solid rgba(255,255,255,.3);
-  color:#fff;font-weight:500;text-align:center;
-  box-shadow:0 25px 80px rgba(0,0,0,.5);
-  z-index:20;opacity:0;animation:pop .5s forwards;
-}
-@keyframes pop{to{opacity:1;transform:translate(-50%,-50%) scale(1);}}
+    .modal {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(.8);
+      padding: 1.8rem 2.6rem;
+      border-radius: 32px;
+      backdrop-filter: blur(18px) saturate(180%);
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.3);
+      color: #fff;
+      font-weight: 500;
+      text-align: center;
+      box-shadow: 0 25px 80px rgba(0,0,0,.5);
+      z-index: 20;
+      opacity: 0;
+      animation: pop .5s forwards;
+    }
 
-/* ===== KEYFRAMES EXTRA ===== */
-@keyframes beat{
-  0%,100%{transform:rotate(-45deg) scale(1);}
-  25%{transform:rotate(-45deg) scale(1.18);}
-  55%{transform:rotate(-45deg) scale(1.02);}
-}
-@keyframes glow{
-  0%,100%{filter:drop-shadow(0 0 12px var(--heart-main));}
-  60%{filter:drop-shadow(0 0 30px var(--heart-main));}
-}
-@keyframes fadeIn{to{opacity:1;}}
-
-/* ===== TEXTO SELEÇÃO (detalhe mimo) ===== */
-::selection{background:var(--heart-main);color:#fff;}
-</style>
+    @keyframes beat {
+      0%, 100% {transform: rotate(-45deg) scale(1);}
+      25% {transform: rotate(-45deg) scale(1.18);}
+      55% {transform: rotate(-45deg) scale(1.02);}
+    }
+    @keyframes glow {
+      0%, 100% {filter: drop-shadow(0 0 12px var(--heart-main));}
+      60% {filter: drop-shadow(0 0 30px var(--heart-main));}
+    }
+    @keyframes fadeIn {to {opacity: 1;}}
+    @keyframes pop {to {opacity: 1; transform: translate(-50%, -50%) scale(1);}}
+    @keyframes liquid {from {transform: rotate(0deg);} to {transform: rotate(360deg);}}
+  </style>
 </head>
-
 <body>
 
 <canvas id="space"></canvas>
@@ -135,62 +168,62 @@ button#cta::after{             /* bolha líquida */
 </div>
 
 <script>
-/* === CANVAS: estrelas + cometas === */
-const canvas=document.getElementById('space'),ctx=canvas.getContext('2d');
-let w,h,stars=[];
-function resize(){w=canvas.width=innerWidth;h=canvas.height=innerHeight;}
-addEventListener('resize',resize);resize();
+  const canvas = document.getElementById('space'), ctx = canvas.getContext('2d');
+  let w, h, stars = [];
 
-function Star(){
-  this.reset=()=>{this.x=Math.random()*w;this.y=Math.random()*h;this.size=Math.random()*1.8+0.2;this.speed=Math.random()*0.2+0.05};
-  this.update=()=>{this.y-=this.speed;if(this.y<0) this.y=h;}
-  this.draw=()=>{ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,'+(0.5+Math.random()*0.5)+')';ctx.fill();};
-  this.reset();
-}
-for(let i=0;i<350;i++)stars.push(new Star());
+  function resize() {
+    w = canvas.width = innerWidth;
+    h = canvas.height = innerHeight;
+  }
+  addEventListener('resize', resize); resize();
 
-function comet(){ // tiro rápido
-  const tail=[];
-  let x=Math.random()*w,y=h+20,len=Math.random()*80+120,speed=Math.random()*4+4;
-  function frame(){
-    ctx.fillStyle='rgba(255,255,255,0.3)';
-    tail.push({x,y,alpha:1}); y-=speed;x+=speed*0.3;
-    tail.forEach(t=>{ctx.beginPath();ctx.arc(t.x,t.y,2,0,6.28);ctx.globalAlpha=t.alpha;ctx.fill();ctx.globalAlpha=1;t.alpha-=0.02});
-    if(tail[0]&&tail[0].alpha<=0)cancelAnimationFrame(id); else id=requestAnimationFrame(frame);
-  }let id=requestAnimationFrame(frame);
-}
-setInterval(()=>Math.random()<.6&&comet(),4000);
+  function Star() {
+    this.reset = () => {
+      this.x = Math.random() * w;
+      this.y = Math.random() * h;
+      this.size = Math.random() * 1.8 + 0.2;
+      this.speed = Math.random() * 0.2 + 0.05;
+    }
+    this.update = () => {
+      this.y -= this.speed;
+      if (this.y < 0) this.y = h;
+    }
+    this.draw = () => {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,255,255,' + (0.5 + Math.random() * 0.5) + ')';
+      ctx.fill();
+    }
+    this.reset();
+  }
+  for (let i = 0; i < 350; i++) stars.push(new Star());
+  function loop() {
+    ctx.clearRect(0, 0, w, h);
+    stars.forEach(s => { s.update(); s.draw(); });
+    requestAnimationFrame(loop);
+  }
+  loop();
 
-/* Loop */
-function loop(){
-  ctx.clearRect(0,0,w,h);
-  stars.forEach(s=>{s.update();s.draw();});
-  requestAnimationFrame(loop);
-}
-loop();
+  const heart = document.querySelector('.heart');
+  for (let i = 0; i < 40; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDuration = 4 + Math.random() * 4 + 's';
+    p.style.background = `rgba(255,255,255,${.4 + Math.random() * .4})`;
+    heart.appendChild(p);
+  }
 
-/* === PARTÍCULAS DE LUZ SUBINDO === */
-const heart=document.querySelector('.heart');
-for(let i=0;i<40;i++){
-  const p=document.createElement('div');
-  p.className='particle';
-  p.style.left=Math.random()*100+'%';
-  p.style.animationDuration=4+Math.random()*4+'s';
-  p.style.background=`rgba(255,255,255,${.4+Math.random()*.4})`;
-  heart.appendChild(p);
-}
-
-/* === MODAL CARINHOSO === */
-const btn=document.getElementById('cta');
-btn.addEventListener('click',()=>{
-  const m=document.createElement('div');
-  m.className='modal';
-  m.textContent='Você é incrível! 🖕🏼';
-  document.body.appendChild(m);
-  const remove=()=>m.remove();
-  m.addEventListener('click',remove);
-  setTimeout(remove,5000);
-});
+  const btn = document.getElementById('cta');
+  btn.addEventListener('click', () => {
+    const m = document.createElement('div');
+    m.className = 'modal';
+    m.textContent = 'Você é incrível! Receba meu afago ❤️';
+    document.body.appendChild(m);
+    const remove = () => m.remove();
+    m.addEventListener('click', remove);
+    setTimeout(remove, 5000);
+  });
 </script>
 </body>
 </html>
