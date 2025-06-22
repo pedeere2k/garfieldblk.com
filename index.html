@@ -2,99 +2,93 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Mensagem Animada</title>
+  <title>Cadê meu Pix?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      background: #18181a;
-      display: flex;
-      height: 100vh;
-      align-items: center;
-      justify-content: center;
-      margin: 0;
-      font-family: 'Fira Mono', 'Consolas', monospace;
-    }
-    .box {
-      background: #242426;
-      border: 2px solid #00ffd0;
-      border-radius: 15px;
-      padding: 32px 28px 32px 56px;
-      box-shadow: 0 2px 14px #0008;
+      background: #222;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      min-width: 340px;
-      position: relative;
-    }
-    .led {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: #00ffd0;
-      box-shadow: 0 0 18px #00ffd0, 0 0 8px #00ffe488;
-      position: absolute;
-      left: 18px;
-      top: 28px;
-      animation: led-blink 0.8s steps(1) infinite;
-    }
-    @keyframes led-blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.15; }
-    }
-    .linha {
-      color: #fff;
-      font-size: 1.18rem;
-      line-height: 1.6;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
       margin: 0;
-      letter-spacing: 0.5px;
-      min-height: 1.5em;
-      font-family: inherit;
-      white-space: pre;
+    }
+    .luz {
+      width: 120px;
+      height: 120px;
+      background: #444;
+      border-radius: 50%;
+      margin-bottom: 32px;
+      box-shadow: 0 0 40px #000 inset;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    .luz.acesa {
+      background: #ffeb3b;
+      box-shadow: 0 0 80px 25px #ffe600, 0 0 40px #ffeb3b inset;
+    }
+    .texto {
+      font-size: 2rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+      text-align: center;
+      margin-bottom: 32px;
+      text-shadow: 0 2px 12px #000c;
+      transition: color 0.2s;
+    }
+    .botao {
+      padding: 14px 36px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 24px;
+      background: #ffeb3b;
+      color: #222;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 12px #0005;
+      transition: background 0.2s, color 0.2s;
+    }
+    .botao:hover {
+      background: #ffe600;
+      color: #000;
     }
   </style>
 </head>
 <body>
-  <div class="box">
-    <div class="led"></div>
-    <div class="linha" id="linha1"></div>
-    <div class="linha" id="linha2"></div>
-    <div class="linha" id="linha3"></div>
-    <div class="linha" id="linha4"></div>
-    <div class="linha" id="linha5"></div>
-    <div class="linha" id="linha6"></div>
-  </div>
-  <script>
-    // Mensagem quebrada em linhas curtas
-    const linhas = [
-      "IH ALA",
-      "QUER USAR XIT,",
-      "CRIA VERGONHA",
-      "NA CARA",
-      "E VAI TREINAR."
-    ];
-    const delayEntreLinhas = 310; // ms
-    const delayEntreLetras = 36;  // ms
+  <div id="luz" class="luz"></div>
+  <div class="texto" id="texto"></div>
+  <button class="botao" id="botao">Acender a Luz</button>
 
-    function escreverLinha(linhaIndex) {
-      if (linhaIndex >= linhas.length) return;
-      const texto = linhas[linhaIndex];
-      let i = 0;
-      function typeLetter() {
-        document.getElementById('linha' + (linhaIndex + 1)).textContent += texto[i];
-        i++;
-        if (i < texto.length) {
-          setTimeout(typeLetter, delayEntreLetras);
-        } else {
-          setTimeout(() => escreverLinha(linhaIndex + 1), delayEntreLinhas);
-        }
-      }
-      typeLetter();
+  <script>
+    const luz = document.getElementById('luz');
+    const texto = document.getElementById('texto');
+    const botao = document.getElementById('botao');
+
+    let acesa = false;
+
+    function acenderLuz() {
+      acesa = true;
+      luz.classList.add('acesa');
+      texto.textContent = 'Cadê meu pix?';
+      botao.style.display = 'none';
     }
 
-    window.onload = () => {
-      // Limpa todas linhas
-      for(let i=1;i<=6;i++) document.getElementById('linha'+i).textContent = '';
-      escreverLinha(0);
-    };
+    botao.addEventListener('click', acenderLuz);
+
+    // Opcional: também acende se clicar na luz
+    luz.addEventListener('click', () => {
+      if (!acesa) acenderLuz();
+    });
+
+    // Estado inicial
+    luz.classList.remove('acesa');
+    texto.textContent = '';
   </script>
 </body>
 </html>
