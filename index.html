@@ -1,95 +1,144 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!DOCTYPE html><html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Cadê meu Pix?</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>Login Troll – Caminhei com a Luz do Sol</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    body {
-      background: #222;
-      color: #fff;
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+    /* ——— Reset & base ——— */
+    * {
+      box-sizing: border-box;
       margin: 0;
-    }
-    .luz {
-      width: 120px;
-      height: 120px;
-      background: #444;
-      border-radius: 50%;
-      margin-bottom: 32px;
-      box-shadow: 0 0 40px #000 inset;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.3s, box-shadow 0.3s;
-      cursor: pointer;
-    }
-    .luz.acesa {
-      background: #ffeb3b;
-      box-shadow: 0 0 80px 25px #ffe600, 0 0 40px #ffeb3b inset;
-    }
-    .texto {
-      font-size: 2rem;
-      font-weight: bold;
-      letter-spacing: 1px;
-      text-align: center;
-      margin-bottom: 32px;
-      text-shadow: 0 2px 12px #000c;
-      transition: color 0.2s;
-    }
-    .botao {
-      padding: 14px 36px;
-      font-size: 1.2rem;
-      border: none;
-      border-radius: 24px;
-      background: #ffeb3b;
-      color: #222;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 2px 12px #0005;
-      transition: background 0.2s, color 0.2s;
-    }
-    .botao:hover {
-      background: #ffe600;
-      color: #000;
-    }
+      padding: 0;
+      font-family: "Segoe UI", Roboto, sans-serif;
+    }body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+}
+
+/* ——— Login card ——— */
+#login-screen {
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.1);
+  padding: 3rem 2.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 320px;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45);
+  text-align: center;
+  animation: fadeIn 0.8s ease forwards;
+}
+
+#login-screen h1 {
+  color: #ffffff;
+  font-size: 1.75rem;
+  margin-bottom: 2rem;
+  letter-spacing: 0.5px;
+}
+
+input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  margin: 0.5rem 0;
+  border: none;
+  border-radius: 0.75rem;
+  outline: none;
+  background: rgba(255, 255, 255, 0.85);
+}
+
+button {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  margin-top: 1.4rem;
+  border: none;
+  border-radius: 0.75rem;
+  background: #e91e63;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(233, 30, 99, 0.45);
+}
+
+/* ——— Main screen ——— */
+#main-screen {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  overflow: hidden;
+  background: #000;
+}
+
+#main-screen video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ——— Animations ——— */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
   </style>
 </head>
 <body>
-  <div id="luz" class="luz"></div>
-  <div class="texto" id="texto"></div>
-  <button class="botao" id="botao">Acender a Luz</button>
+  <!-- ——— Login Screen ——— -->
+  <div id="login-screen">
+    <h1>Bem‑vindo!</h1>
+    <input id="user" type="text" placeholder="Usuário" />
+    <input id="pass" type="password" placeholder="Senha" />
+    <button id="login-btn">Entrar</button>
+  </div>  <!-- ——— Main Trolling Experience ——— -->  <div id="main-screen">
+    <!-- Background video (replace src with seu vídeo) -->
+    <video id="bgVideo" src="video.mp4" autoplay muted></video><!-- Música principal: “Caminhei com a luz do sol” (substitua o arquivo) -->
+<audio id="songAudio" src="caminhei.mp3" loop></audio>
 
-  <script>
-    const luz = document.getElementById('luz');
-    const texto = document.getElementById('texto');
-    const botao = document.getElementById('botao');
+<!-- Gemidão do Zap para o susto (substitua o arquivo) -->
+<audio id="prankAudio" src="gemidao.mp3"></audio>
 
-    let acesa = false;
+  </div>  <script>
+    const loginBtn    = document.getElementById("login-btn");
+    const loginScreen = document.getElementById("login-screen");
+    const mainScreen  = document.getElementById("main-screen");
+    const bgVideo     = document.getElementById("bgVideo");
+    const songAudio   = document.getElementById("songAudio");
+    const prankAudio  = document.getElementById("prankAudio");
 
-    function acenderLuz() {
-      acesa = true;
-      luz.classList.add('acesa');
-      texto.textContent = 'Cadê meu pix?';
-      botao.style.display = 'none';
-    }
+    // ——— Fake login validation (feel free to expand) ——— //
+    loginBtn.addEventListener("click", async () => {
+      // Esconde login e mostra experiência principal
+      loginScreen.style.display = "none";
+      mainScreen.style.display  = "block";
 
-    botao.addEventListener('click', acenderLuz);
-
-    // Opcional: também acende se clicar na luz
-    luz.addEventListener('click', () => {
-      if (!acesa) acenderLuz();
+      // Inicia o vídeo e a música principal
+      try {
+        await bgVideo.play(); // autoplay muted – já começa
+        await songAudio.play();
+      } catch (e) {
+        console.error("Falha ao iniciar mídia:", e);
+      }
     });
 
-    // Estado inicial
-    luz.classList.remove('acesa');
-    texto.textContent = '';
-  </script>
-</body>
+    // ——— Dispara o Gemidão bem no meio do vídeo ——— //
+    bgVideo.addEventListener("loadedmetadata", () => {
+      if (isFinite(bgVideo.duration)) {
+        const half = bgVideo.duration / 2;
+        setTimeout(() => {
+          prankAudio.play().catch(err => console.error(err));
+        }, half * 1000);
+      }
+    });
+  </script></body>
 </html>
 
