@@ -1,144 +1,186 @@
-<!DOCTYPE html><html lang="pt-BR">
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <title>Login Troll – Caminhei com a Luz do Sol</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Eu Te Amo Nicky</title>
   <style>
-    /* ——— Reset & base ——— */
-    * {
-      box-sizing: border-box;
+    body {
       margin: 0;
-      padding: 0;
-      font-family: "Segoe UI", Roboto, sans-serif;
-    }body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-}
+      background: linear-gradient(to bottom right, #ffb6c1, #ffc0cb);
+      font-family: 'Arial', sans-serif;
+      overflow-x: hidden;
+    }
 
-/* ——— Login card ——— */
-#login-screen {
-  backdrop-filter: blur(12px);
-  background: rgba(255, 255, 255, 0.1);
-  padding: 3rem 2.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  width: 320px;
-  border-radius: 1.5rem;
-  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45);
-  text-align: center;
-  animation: fadeIn 0.8s ease forwards;
-}
+    .header-text {
+      text-align: center;
+      font-size: 2.5em;
+      font-weight: bold;
+      color: white;
+      padding: 20px 0 10px;
+      text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff1493;
+    }
 
-#login-screen h1 {
-  color: #ffffff;
-  font-size: 1.75rem;
-  margin-bottom: 2rem;
-  letter-spacing: 0.5px;
-}
+    .gallery {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 30px 15px;
+    }
 
-input {
-  width: 100%;
-  padding: 0.9rem 1rem;
-  margin: 0.5rem 0;
-  border: none;
-  border-radius: 0.75rem;
-  outline: none;
-  background: rgba(255, 255, 255, 0.85);
-}
+    .gallery-item {
+      width: 30%;
+      max-width: 200px;
+      cursor: pointer;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 15px rgba(255, 20, 147, 0.5);
+      transition: transform 0.3s;
+    }
 
-button {
-  width: 100%;
-  padding: 0.9rem 1rem;
-  margin-top: 1.4rem;
-  border: none;
-  border-radius: 0.75rem;
-  background: #e91e63;
-  color: #fff;
-  font-weight: 700;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
+    .gallery-item:hover {
+      transform: scale(1.05);
+    }
 
-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 18px rgba(233, 30, 99, 0.45);
-}
+    .gallery-item img,
+    .gallery-item video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
 
-/* ——— Main screen ——— */
-#main-screen {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  display: none;
-  overflow: hidden;
-  background: #000;
-}
+    .center-message {
+      text-align: center;
+      font-size: 1.7em;
+      color: white;
+      font-weight: bold;
+      text-shadow: 0 0 10px #ff69b4;
+      margin-top: 20px;
+    }
 
-#main-screen video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+    }
 
-/* ——— Animations ——— */
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
+    .lightbox-content {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+    }
 
+    .lightbox video,
+    .lightbox img {
+      width: 100%;
+      height: auto;
+    }
+
+    .falling-text {
+      position: fixed;
+      top: -10%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.5em;
+      color: white;
+      animation: fall 6s infinite linear;
+      pointer-events: none;
+      opacity: 0.8;
+    }
+
+    @keyframes fall {
+      0% { transform: translateX(-50%) translateY(0); opacity: 1; }
+      100% { transform: translateX(-50%) translateY(110vh); opacity: 0; }
+    }
+
+    @media (max-width: 600px) {
+      .gallery-item { width: 80%; }
+      .header-text { font-size: 2em; }
+      .center-message { font-size: 1.3em; }
+    }
   </style>
 </head>
 <body>
-  <!-- ——— Login Screen ——— -->
-  <div id="login-screen">
-    <h1>Bem‑vindo!</h1>
-    <input id="user" type="text" placeholder="Usuário" />
-    <input id="pass" type="password" placeholder="Senha" />
-    <button id="login-btn">Entrar</button>
-  </div>  <!-- ——— Main Trolling Experience ——— -->  <div id="main-screen">
-    <!-- Background video (replace src with seu vídeo) -->
-    <video id="bgVideo" src="video.mp4" autoplay muted></video><!-- Música principal: “Caminhei com a luz do sol” (substitua o arquivo) -->
-<audio id="songAudio" src="caminhei.mp3" loop></audio>
 
-<!-- Gemidão do Zap para o susto (substitua o arquivo) -->
-<audio id="prankAudio" src="gemidao.mp3"></audio>
+  <div class="header-text">EU TE AMO NICKY ❤️</div>
 
-  </div>  <script>
-    const loginBtn    = document.getElementById("login-btn");
-    const loginScreen = document.getElementById("login-screen");
-    const mainScreen  = document.getElementById("main-screen");
-    const bgVideo     = document.getElementById("bgVideo");
-    const songAudio   = document.getElementById("songAudio");
-    const prankAudio  = document.getElementById("prankAudio");
+  <div class="gallery">
+    <div class="gallery-item" onclick="openLightbox('https://files.catbox.moe/b0tzmf.jpg')">
+      <img src="https://files.catbox.moe/b0tzmf.jpg" alt="Foto 1">
+    </div>
+    <div class="gallery-item" onclick="openLightbox('https://files.catbox.moe/w64toa.jpg')">
+      <img src="https://files.catbox.moe/w64toa.jpg" alt="Foto 2">
+    </div>
+    <div class="gallery-item" onclick="openLightbox('https://files.catbox.moe/nw3baw.mp4', true)">
+      <video src="https://files.catbox.moe/nw3baw.mp4" muted autoplay loop></video>
+    </div>
+  </div>
 
-    // ——— Fake login validation (feel free to expand) ——— //
-    loginBtn.addEventListener("click", async () => {
-      // Esconde login e mostra experiência principal
-      loginScreen.style.display = "none";
-      mainScreen.style.display  = "block";
+  <div class="center-message">
+    Se conhecemos a <br>
+    <span id="contador"></span>
+  </div>
 
-      // Inicia o vídeo e a música principal
-      try {
-        await bgVideo.play(); // autoplay muted – já começa
-        await songAudio.play();
-      } catch (e) {
-        console.error("Falha ao iniciar mídia:", e);
-      }
-    });
+  <div class="lightbox" onclick="closeLightbox()" id="lightbox">
+    <div class="lightbox-content" id="lightbox-content"></div>
+  </div>
 
-    // ——— Dispara o Gemidão bem no meio do vídeo ——— //
-    bgVideo.addEventListener("loadedmetadata", () => {
-      if (isFinite(bgVideo.duration)) {
-        const half = bgVideo.duration / 2;
-        setTimeout(() => {
-          prankAudio.play().catch(err => console.error(err));
-        }, half * 1000);
-      }
-    });
-  </script></body>
+  <script>
+    // Animação caindo
+    function createFallingText() {
+      const msg = document.createElement("div");
+      msg.classList.add("falling-text");
+      const frases = ["Eu te amo! ❤️", "I LOVE YOU 💖"];
+      msg.innerText = frases[Math.floor(Math.random() * frases.length)];
+      msg.style.left = `${Math.random() * 100}vw`;
+      msg.style.fontSize = `${Math.random() * 0.5 + 1.2}em`;
+      document.body.appendChild(msg);
+      setTimeout(() => msg.remove(), 6000);
+    }
+
+    setInterval(createFallingText, 800);
+
+    // Lightbox
+    function openLightbox(src, isVideo = false) {
+      const lightbox = document.getElementById("lightbox");
+      const content = document.getElementById("lightbox-content");
+      content.innerHTML = isVideo
+        ? `<video src="${src}" controls autoplay style="border-radius:10px; max-height: 90vh;"></video>`
+        : `<img src="${src}" style="border-radius:10px; max-height: 90vh;">`;
+      lightbox.style.display = "flex";
+    }
+
+    function closeLightbox() {
+      document.getElementById("lightbox").style.display = "none";
+      document.getElementById("lightbox-content").innerHTML = "";
+    }
+
+    // Contador
+function atualizarContador() {
+  const inicio = new Date("2025-05-27T00:00:00");
+  const agora = new Date();
+  const diff = agora - inicio;
+
+  const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const minutos = Math.floor((diff / (1000 * 60)) % 60);
+  const segundos = Math.floor((diff / 1000) % 60);
+
+  document.getElementById("contador").innerText =
+    `${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos desde que nos conhecemos 💖`;
+}
+
+setInterval(atualizarContador, 1000);
+atualizarContador();
+  </script>
+</body>
 </html>
 
