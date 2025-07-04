@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Eu Te Amo Nicky</title>
-  <title>Eu Te Amo Emilly</title>
+  <title>Eu Te Amo emilly e Emilly</title>
   <style>
     body {
       margin: 0;
@@ -102,6 +101,35 @@
       100% { transform: translateX(-50%) translateY(110vh); opacity: 0; }
     }
 
+    .secret-message {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .secret-message button {
+      padding: 10px 20px;
+      font-size: 1em;
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ff1493;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .secret-message button:hover {
+      background-color: #ff1493;
+    }
+
+    .secret-message p {
+      margin-top: 15px;
+      color: white;
+      font-size: 1.3em;
+      font-weight: bold;
+      text-shadow: 0 0 5px #fff;
+    }
+
     @media (max-width: 600px) {
       .gallery-item { width: 80%; }
       .header-text { font-size: 2em; }
@@ -120,19 +148,26 @@
     </div>
     <div class="gallery-item" onclick="openLightbox('https://files.catbox.moe/w64toa.jpg')">
       <img src="https://files.catbox.moe/w64toa.jpg" alt="Foto 2">
+    </div>
     <div class="gallery-item" onclick="openLightbox('https://files.catbox.moe/f9w4la.jpg')">
-      <img src="https://files.catbox.moe/f9w4la.jpg" alt="Foto 2">
+      <img src="https://files.catbox.moe/f9w4la.jpg" alt="Foto 3">
     </div>
     <div class="gallery-item" onclick="openLightbox('https://files.catbox.moe/nw3baw.mp4', true)">
       <video src="https://files.catbox.moe/nw3baw.mp4" muted autoplay loop></video>
+    </div>
     <div class="gallery-item" onclick="openLightbox('https://files.catbox.moe/n67yly.mp4', true)">
       <video src="https://files.catbox.moe/n67yly.mp4" muted autoplay loop></video>
     </div>
   </div>
 
   <div class="center-message">
-    Se conhecemos a <br>
+    Se conhecemos há<br>
     <span id="contador"></span>
+  </div>
+
+  <div class="secret-message">
+    <button onclick="mostrarMensagem()">Mensagem Secreta 💌</button>
+    <p id="mensagem"></p>
   </div>
 
   <div class="lightbox" onclick="closeLightbox()" id="lightbox">
@@ -140,11 +175,11 @@
   </div>
 
   <script>
-    // Animação caindo
+    // Texto caindo
     function createFallingText() {
       const msg = document.createElement("div");
       msg.classList.add("falling-text");
-      const frases = ["Eu te amo! ❤️", "I LOVE YOU 💖"];
+      const frases = ["Eu te amo! ❤️", "I LOVE YOU 💖", "Você é meu mundo!", "Sempre juntos! 💕"];
       msg.innerText = frases[Math.floor(Math.random() * frases.length)];
       msg.style.left = `${Math.random() * 100}vw`;
       msg.style.fontSize = `${Math.random() * 0.5 + 1.2}em`;
@@ -152,7 +187,7 @@
       setTimeout(() => msg.remove(), 6000);
     }
 
-    setInterval(createFallingText, 800);
+    setInterval(createFallingText, 1000);
 
     // Lightbox
     function openLightbox(src, isVideo = false) {
@@ -170,23 +205,35 @@
     }
 
     // Contador
-function atualizarContador() {
-  const inicio = new Date("2025-05-27T00:00:00");
-  const inicio = new Date("2024-07-27T00:00:00");
-  const agora = new Date();
-  const diff = agora - inicio;
+    function atualizarContador() {
+      const inicio = new Date("2024-07-27T00:00:00"); // Coloque a data correta aqui
+      const agora = new Date();
+      const diff = agora - inicio;
 
-  const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
-  const minutos = Math.floor((diff / (1000 * 60)) % 60);
-  const segundos = Math.floor((diff / 1000) % 60);
+      const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutos = Math.floor((diff / (1000 * 60)) % 60);
+      const segundos = Math.floor((diff / 1000) % 60);
 
-  document.getElementById("contador").innerText =
-    `${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos desde que nos conhecemos 💖`;
-}
+      document.getElementById("contador").innerText =
+        `${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos 💖`;
+    }
 
-setInterval(atualizarContador, 1000);
-atualizarContador();
+    setInterval(atualizarContador, 1000);
+    atualizarContador();
+
+    // Mensagem Secreta
+    function mostrarMensagem() {
+      const mensagens = [
+        "Você é o amor da minha vida!",
+        "Nunca vou te deixar 💘",
+        "Cada segundo com você vale ouro!",
+        "Com você, tudo faz sentido ❤️",
+        "Te amar é meu destino ✨"
+      ];
+      const mensagem = mensagens[Math.floor(Math.random() * mensagens.length)];
+      document.getElementById("mensagem").innerText = mensagem;
+    }
   </script>
 </body>
-    </html>
+</html>
